@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}Terms & Privacy{% endblock %}
+
+{% block content %}
+    <div class="terms-container">
+        <h1 class="terms-heading">Terms & Privacy Policy</h1>
+        <p class="terms-subtext">Read our terms of service and privacy policy before using our platform.</p>
+
+        <div class="terms-section">
+            <div class="terms-box">
+                <h2 class="terms-title">Terms of Service <i class="fas fa-chevron-down"></i></h2>
+                <div class="terms-content">
+                    <p>By using our service, you agree to abide by our terms and conditions...</p>
+                </div>
+            </div>
+            
+            <div class="terms-box">
+                <h2 class="terms-title">Privacy Policy <i class="fas fa-chevron-down"></i></h2>
+                <div class="terms-content">
+                    <p>Your privacy is important to us. We collect and process data according to our privacy standards...</p>
+                </div>
+            </div>
+
+            <div class="terms-box">
+                <h2 class="terms-title">User Responsibilities <i class="fas fa-chevron-down"></i></h2>
+                <div class="terms-content">
+                    <p>Users must ensure compliance with applicable laws and avoid misuse of the platform...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .terms-container {
+            text-align: center;
+            padding: 60px 10%;
+        }
+
+        .terms-heading {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #00f7ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .terms-subtext {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .terms-section {
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: left;
+        }
+
+        .terms-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .terms-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+        }
+
+        .terms-title {
+            font-size: 1.5rem;
+            color: #00f7ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .terms-content {
+            display: none;
+            padding-top: 10px;
+            color: #cccccc;
+        }
+
+        .terms-box.active .terms-content {
+            display: block;
+        }
+
+        @media (max-width: 900px) {
+            .terms-section {
+                max-width: 100%;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let termsBoxes = document.querySelectorAll(".terms-box");
+
+            termsBoxes.forEach(box => {
+                box.addEventListener("click", function() {
+                    this.classList.toggle("active");
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+    <div class="about-container">
+        <h1 class="about-heading">Who We Are</h1>
+        <p class="about-text">
+            At <span class="highlight-text">Analytics Pro</span>, we empower businesses with AI-driven 
+            **customer churn prediction** to help them retain customers and optimize growth.
+        </p>
+
+        <div class="about-section">
+            <div class="about-box">
+                <i class="fas fa-brain about-icon"></i>
+                <h2>AI-Powered Insights</h2>
+                <p>We use cutting-edge AI models to provide accurate and actionable customer retention predictions.</p>
+            </div>
+            <div class="about-box">
+                <i class="fas fa-chart-line about-icon"></i>
+                <h2>Data-Driven Decisions</h2>
+                <p>Transform raw data into meaningful insights that help businesses make better decisions.</p>
+            </div>
+            <div class="about-box">
+                <i class="fas fa-users about-icon"></i>
+                <h2>Customer Retention</h2>
+                <p>Reduce churn rates and improve customer loyalty with predictive analytics.</p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .about-container {
+            text-align: center;
+            padding: 60px 10%;
+        }
+
+        .about-heading {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #00f7ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .highlight-text {
+            font-weight: 700;
+            background: linear-gradient(45deg, #00f7ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-section {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .about-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 12px;
+            width: 30%;
+            text-align: center;
+            transition: 0.3s ease-in-out;
+        }
+
+        .about-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.2);
+        }
+
+        .about-box h2 {
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .about-box p {
+            color: #cccccc;
+            font-size: 1rem;
+        }
+
+        .about-icon {
+            font-size: 2.5rem;
+            color: #00f7ff;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 900px) {
+            .about-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            .about-box {
+                width: 80%;
+            }
+        }
+    </style>
+{% endblock %}

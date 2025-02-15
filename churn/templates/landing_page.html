@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+
+{% block title %}Analytics Pro - Predict the Future{% endblock %}
+
+{% block content %}
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="gradient-text">Predict</span> the Future<br>
+                <span class="accent-text">Shape</span> Your Success
+            </h1>
+            <p class="hero-subtitle">Harness the power of AI to forecast customer behavior with 94.7% accuracy</p>
+            <div class="cta-group">
+                <a href="{% url 'login' %}" class="cta-button primary">Access Dashboard</a>
+                <a href="{% url 'signup' %}" class="cta-button secondary">Start Free Trial</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="data-sphere"></div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h2>Predictive Analytics</h2>
+            <p>AI models process real-time data streams, identifying churn risks earlier than traditional methods.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔗</div>
+            <h2>Seamless Integration</h2>
+            <p>Secure API gateway connects your CRM while ensuring data integrity.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💡</div>
+            <h2>Actionable Insights</h2>
+            <p>Receive prioritized recommendations with ROI projections and clear roadmaps.</p>
+        </div>
+    </section>
+
+    <style>
+        /* Root Variables */
+        :root {
+            --primary-color: #6E56CF;
+            --secondary-color: #4CC38A;
+            --background-color: #0A0A0A;
+            --text-color: #FFFFFF;
+            --card-bg-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4rem 6% 3rem; /* Reduced top padding */
+            flex-wrap: wrap;
+        }
+
+        .hero-content {
+            max-width: 500px;
+            text-align: left;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .accent-text {
+            color: var(--secondary-color);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .cta-button {
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s ease-in-out;
+            font-size: 0.9rem;
+        }
+
+        .cta-button.primary {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .cta-button.secondary {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .hero-visual {
+            width: 350px;
+            height: 350px;
+            position: relative;
+        }
+
+        .data-sphere {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, var(--primary-color), transparent 70%);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: pulse 3s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.1); opacity: 0.7; }
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 3rem 6%;
+        }
+
+        .feature-card {
+            background: var(--card-bg-color);
+            padding: 1.2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: 0.3s ease-in-out;
+            font-size: 0.85rem;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+        }
+
+        .feature-card h2 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .feature-card p {
+            opacity: 0.8;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 3rem 5%;
+            }
+
+            .hero-content {
+                margin-bottom: 2rem;
+            }
+
+            .hero-visual {
+                width: 80%;
+                max-width: 300px;
+                height: 300px;
+            }
+
+            .cta-group {
+                justify-content: center;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sphere = document.querySelector('.data-sphere');
+
+            document.addEventListener('mousemove', (e) => {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                sphere.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
+            });
+        });
+    </script>
+{% endblock %}

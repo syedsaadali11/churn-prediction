@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="home-container">
+        <h1 class="home-heading">Welcome to Churn Predictor</h1>
+        <p class="home-subtext">
+            Use the power of AI to predict customer churn and optimize your business strategies.
+        </p>
+
+        <div class="home-actions">
+            <a href="{% url 'predict' %}" class="home-btn">Start Prediction</a>
+            <a href="{% url 'batch_predict' %}" class="home-btn">Batch Analysis</a>
+        </div>
+
+        <div class="features-section">
+            <div class="feature-box">
+                <i class="fas fa-brain feature-icon"></i>
+                <h2>AI-Driven Insights</h2>
+                <p>Leverage machine learning to detect customer churn patterns with accuracy.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <h2>Real-Time Predictions</h2>
+                <p>Upload customer data and get instant churn predictions for strategic decision-making.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fas fa-user-check feature-icon"></i>
+                <h2>Optimize Retention</h2>
+                <p>Identify at-risk customers and take action to improve loyalty and retention.</p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .home-container {
+            text-align: center;
+            padding: 60px 10%;
+        }
+
+        .home-heading {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #00f7ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .home-subtext {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .home-actions {
+            margin-top: 30px;
+        }
+
+        .home-btn {
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #0066ff, #00f7ff);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+            margin: 10px;
+            display: inline-block;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .features-section {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 12px;
+            width: 30%;
+            text-align: center;
+            transition: 0.3s ease-in-out;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.2);
+        }
+
+        .feature-box h2 {
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .feature-box p {
+            color: #cccccc;
+            font-size: 1rem;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #00f7ff;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 900px) {
+            .features-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            .feature-box {
+                width: 80%;
+            }
+        }
+    </style>
+{% endblock %}

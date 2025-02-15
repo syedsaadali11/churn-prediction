@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+
+{% block title %}Churn Prediction{% endblock %}
+
+{% block content %}
+    <div class="predict-container">
+        <h1 class="predict-heading">Customer Churn Prediction</h1>
+        <p class="predict-subtext">Enter customer details to predict churn probability and receive actionable insights.</p>
+
+        <form method="POST" class="predict-form">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label for="tenure">Tenure (months):</label>
+                <input type="number" id="tenure" name="tenure" required>
+            </div>
+
+            <div class="input-group">
+                <label for="monthly_charges">Monthly Charges ($):</label>
+                <input type="number" id="monthly_charges" name="monthly_charges" required>
+            </div>
+
+            <div class="input-group">
+                <label for="total_charges">Total Charges ($):</label>
+                <input type="number" id="total_charges" name="total_charges" required>
+            </div>
+
+            <h2 class="predict-subheading">Customer Demographics</h2>
+
+            <div class="input-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="senior_citizen">Senior Citizen:</label>
+                <select id="senior_citizen" name="senior_citizen">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="partner">Partner:</label>
+                <select id="partner" name="partner">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="dependents">Dependents:</label>
+                <select id="dependents" name="dependents">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <h2 class="predict-subheading">Subscription Details</h2>
+
+            <div class="input-group">
+                <label for="contract">Contract Type:</label>
+                <select id="contract" name="contract">
+                    <option value="Month-to-month">Month-to-Month</option>
+                    <option value="One year">One Year</option>
+                    <option value="Two year">Two Years</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="paperless_billing">Paperless Billing:</label>
+                <select id="paperless_billing" name="paperless_billing">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="payment_method">Payment Method:</label>
+                <select id="payment_method" name="payment_method">
+                    <option value="Electronic check">Electronic Check</option>
+                    <option value="Mailed check">Mailed Check</option>
+                    <option value="Bank transfer (automatic)">Bank Transfer</option>
+                    <option value="Credit card (automatic)">Credit Card</option>
+                </select>
+            </div>
+
+            <button type="submit" class="predict-btn">Predict Churn</button>
+        </form>
+
+        {% if result %}
+        <div class="result-box" id="result-container">
+            <h2>Prediction Result</h2>
+            <p><strong>Churn Probability:</strong> {{ result.churn_probability }}</p>
+            <p><strong>Decision:</strong> {{ result.churn_decision }}</p>
+
+            <h3>📌 Churn Insights</h3>
+            <p>{{ result.reason }}</p>
+
+            <h3>🛠 How to Reduce Churn</h3>
+            <ul>
+                {% for tip in result.suggestions %}
+                    <li>{{ tip }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <script>
+            // Auto-scroll to results and add visual effect
+            document.addEventListener('DOMContentLoaded', function() {
+                const resultElement = document.getElementById('result-container');
+                if (resultElement) {
+                    // Smooth scroll to results
+                    resultElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Add visual highlight effect
+                    resultElement.style.animation = 'highlight 1.5s ease-out';
+                }
+            });
+        </script>
+        {% endif %}
+    </div>
+
+    <style>
+        .predict-container {
+            text-align: center;
+            padding: 50px 10%;
+        }
+
+        .predict-heading {
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, #00f7ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .predict-subtext {
+            font-size: 1.1rem;
+            color: #ccc;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .predict-subheading {
+            font-size: 1.4rem;
+            margin-top: 30px;
+            color: #00f7ff;
+        }
+
+        .predict-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .input-group {
+            width: 50%;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 1rem;
+            color: #00f7ff;
+            margin-bottom: 5px;
+        }
+
+        .predict-form input, .predict-form select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .predict-btn {
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #0066ff, #00f7ff);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .predict-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .result-box {
+            margin-top: 40px;
+            color: white;
+            text-align: left;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            width: 60%;
+            margin: 40px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-box h3 {
+            color: #00f7ff;
+            margin-top: 10px;
+        }
+
+        .result-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .result-box ul li {
+            margin-bottom: 5px;
+        }
+
+        @keyframes highlight {
+            0% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0); }
+            50% { box-shadow: 0 0 25px 10px rgba(0, 247, 255, 0.3); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0); }
+        }
+
+        @media (max-width: 900px) {
+            .input-group {
+                width: 80%;
+            }
+
+            .result-box {
+                width: 90%;
+            }
+        }
+    </style>
+{% endblock %}

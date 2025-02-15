@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Services{% endblock %}
+
+{% block content %}
+    <div class="services-container">
+        <h1 class="services-heading">Our Services</h1>
+        <p class="services-subtext">We help businesses predict customer churn and take proactive actions.</p>
+
+        <div class="services-section">
+            <div class="service-box">
+                <i class="fas fa-chart-pie service-icon"></i>
+                <h2>Churn Prediction</h2>
+                <p>Utilize AI-driven models to predict customer churn before it happens.</p>
+            </div>
+
+            <div class="service-box">
+                <i class="fas fa-bullseye service-icon"></i>
+                <h2>Retention Strategies</h2>
+                <p>Get actionable insights to prevent churn and retain valuable customers.</p>
+            </div>
+
+            <div class="service-box">
+                <i class="fas fa-database service-icon"></i>
+                <h2>Data Analytics</h2>
+                <p>Leverage predictive analytics to understand customer behavior.</p>
+            </div>
+
+            <div class="service-box">
+                <i class="fas fa-robot service-icon"></i>
+                <h2>AI-Powered Insights</h2>
+                <p>Automate business decisions using cutting-edge machine learning technology.</p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .services-container {
+            text-align: center;
+            padding: 40px 5%;
+        }
+
+        .services-heading {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #00f7ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .services-subtext {
+            font-size: 1rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .services-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .service-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: 0.3s ease-in-out;
+            min-height: 160px;
+        }
+
+        .service-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+        }
+
+        .service-box h2 {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .service-box p {
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+
+        .service-icon {
+            font-size: 2rem;
+            color: #00f7ff;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .services-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+{% endblock %}

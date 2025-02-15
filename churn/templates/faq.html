@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block content %}
+    <div class="faq-container">
+        <h1 class="faq-heading">Frequently Asked Questions</h1>
+        <p class="faq-subtext">Find answers to common questions about churn prediction.</p>
+
+        <div class="faq-section">
+            <div class="faq-box">
+                <h2 class="faq-title">What is churn prediction? <i class="fas fa-chevron-down"></i></h2>
+                <div class="faq-content">
+                    <p>Churn prediction is the process of using AI and data analytics to identify customers who are likely to stop using a service.</p>
+                </div>
+            </div>
+
+            <div class="faq-box">
+                <h2 class="faq-title">How accurate is the churn prediction model? <i class="fas fa-chevron-down"></i></h2>
+                <div class="faq-content">
+                    <p>Our model is trained on historical data and can achieve high accuracy depending on the quality of input data.</p>
+                </div>
+            </div>
+
+            <div class="faq-box">
+                <h2 class="faq-title">Can I upload my own data for churn prediction? <i class="fas fa-chevron-down"></i></h2>
+                <div class="faq-content">
+                    <p>Yes! You can upload a CSV file with customer data, and our AI model will generate churn predictions.</p>
+                </div>
+            </div>
+
+            <div class="faq-box">
+                <h2 class="faq-title">What actions can I take after getting churn predictions? <i class="fas fa-chevron-down"></i></h2>
+                <div class="faq-content">
+                    <p>Businesses can use churn insights to improve customer engagement, offer discounts, and enhance customer support.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .faq-container {
+            text-align: center;
+            padding: 60px 10%;
+        }
+
+        .faq-heading {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #00f7ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .faq-subtext {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .faq-section {
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: left;
+        }
+
+        .faq-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .faq-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+        }
+
+        .faq-title {
+            font-size: 1.5rem;
+            color: #00f7ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .faq-content {
+            display: none;
+            padding-top: 10px;
+            color: #cccccc;
+        }
+
+        .faq-box.active .faq-content {
+            display: block;
+        }
+
+        @media (max-width: 900px) {
+            .faq-section {
+                max-width: 100%;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let faqBoxes = document.querySelectorAll(".faq-box");
+
+            faqBoxes.forEach(box => {
+                box.addEventListener("click", function() {
+                    this.classList.toggle("active");
+                });
+            });
+        });
+    </script>
+{% endblock %}

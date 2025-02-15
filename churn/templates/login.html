@@ -1,0 +1,542 @@
+{% extends 'base.html' %}
+
+{% block title %}Secure Login | Analytics Pro{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066ff;
+            --secondary: #00f7ff;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .auth-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 100vh;
+            background: var(--background);
+        }
+
+        .auth-visual {
+            position: relative;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            overflow: hidden;
+        }
+
+        .gradient-background {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 180deg at 50% 50%,
+                var(--primary) 0deg,
+                var(--secondary) 180deg,
+                var(--primary) 360deg
+            );
+            animation: rotate 20s linear infinite;
+            opacity: 0.1;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-primary);
+            padding: 2rem;
+        }
+
+        .brand-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--text-primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .visual-text {
+            font-size: 1.2rem;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+        }
+
+        .animated-dots {
+            margin-top: 3rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .dot-pulse {
+            width: 12px;
+            height: 12px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            animation: pulse 1.4s infinite ease-in-out;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+
+        .auth-form {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--surface);
+        }
+
+        .form-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .form-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .input-field {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-field input:focus {
+            outline: none;
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .input-field label {
+            position: absolute;
+            left: 2.5rem;
+            top: 1rem;
+            color: var(--text-secondary);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-field input:focus ~ label,
+        .input-field input:valid ~ label {
+            transform: translateY(-1.5rem);
+            font-size: 0.8rem;
+            left: 1rem;
+            color: var(--secondary);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--secondary);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+        .custom-checkbox {
+            display: flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            padding-left: 32px;
+            min-height: 24px;
+        }
+
+        .hidden-checkbox {
+            position: absolute;
+            opacity: 0;
+            height: 0;
+            width: 0;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .checkmark {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 20px;
+            width: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #334155;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .check-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 14px;
+            height: 14px;
+            stroke: var(--secondary);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .custom-checkbox input:checked ~ .checkmark .check-icon {
+            opacity: 1;
+        }
+
+        .custom-checkbox input:checked ~ .checkmark {
+            background: rgba(0, 247, 255, 0.1);
+            border-color: var(--secondary);
+        }
+
+        .checkbox-label {
+            margin-left: 12px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password span {
+            position: relative;
+        }
+
+        .forgot-password span::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: var(--secondary);
+        }
+
+        .forgot-password:hover span::after {
+            width: 100%;
+        }
+
+        .arrow-icon {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .forgot-password:hover .arrow-icon {
+            transform: translateX(3px);
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .auth-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 231, 255, 0.2);
+        }
+
+        .auth-footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .auth-link {
+            color: var(--secondary);
+            text-decoration: none;
+            margin-left: 0.5rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .auth-link:hover {
+            opacity: 0.8;
+        }
+
+        .social-auth {
+            margin-top: 2rem;
+        }
+
+        .divider {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .social-button:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .auth-container {
+                grid-template-columns: 1fr;
+            }
+
+            .auth-visual {
+                display: none;
+            }
+
+            .auth-form {
+                padding: 2rem;
+            }
+
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-visual">
+            <div class="gradient-background"></div>
+            <div class="content-wrapper">
+                <h1 class="brand-heading">Analytics Pro</h1>
+                <p class="visual-text">Customer Retention Platform</p>
+                <div class="animated-dots">
+                    <div class="dot-pulse"></div>
+                    <div class="dot-pulse delay-1"></div>
+                    <div class="dot-pulse delay-2"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-form">
+            <div class="form-header">
+                <h2 class="form-title">Welcome Back</h2>
+                <p class="form-subtitle">Secure access to your analytics dashboard</p>
+            </div>
+
+            {% if messages %}
+            <div class="alert-container">
+                {% for message in messages %}
+                <div class="alert {{ message.tags }} slide-in">
+                    <i class="alert-icon fas fa-{% if message.tags == 'error' %}exclamation-circle{% else %}check-circle{% endif %}"></i>
+                    <span>{{ message }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST" class="modern-form">
+                {% csrf_token %}
+                
+                <div class="input-field">
+                    <input type="text" id="username" name="username" required>
+                    <label for="username">Username</label>
+                    <i class="input-icon fas fa-user"></i>
+                    <div class="underline"></div>
+                </div>
+
+                <div class="input-field">
+                    <input type="password" id="password" name="password" required>
+                    <label for="password">Password</label>
+                    <i class="input-icon fas fa-lock"></i>
+                    <div class="underline"></div>
+                    <button type="button" class="password-toggle">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <div class="form-options">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" class="hidden-checkbox">
+                        <span class="checkmark">
+                            <svg class="check-icon" viewBox="0 0 12 9">
+                                <path d="M1 4.5L4.5 8L11 1" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <span class="checkbox-label">Keep me signed in</span>
+                    </label>
+                    <a href="#forgot-password" class="forgot-password">
+                        <span>Need help signing in?</span>
+                        <svg class="arrow-icon" viewBox="0 0 24 24">
+                            <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <button type="submit" class="auth-button">
+                    <span>Authenticate</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+
+                <div class="auth-footer">
+                    <span>New to Analytics Pro?</span>
+                    <a href="{% url 'signup' %}" class="auth-link">Create Account</a>
+                </div>
+            </form>
+
+            <div class="social-auth">
+                <p class="divider"><span>Or continue with</span></p>
+                <div class="social-buttons">
+                    <button class="social-button google">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button class="social-button microsoft">
+                        <i class="fab fa-microsoft"></i>
+                    </button>
+                    <button class="social-button github">
+                        <i class="fab fa-github"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Password toggle functionality
+            const passwordToggle = document.querySelector('.password-toggle');
+            const passwordInput = document.getElementById('password');
+
+            passwordToggle.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                passwordToggle.innerHTML = type === 'password' ? 
+                    '<i class="fas fa-eye"></i>' : 
+                    '<i class="fas fa-eye-slash"></i>';
+            });
+
+            // Input validation
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    input.parentElement.classList.toggle('has-value', input.value.length > 0);
+                });
+            });
+
+            // Checkbox initialization
+            const checkbox = document.querySelector('.custom-checkbox input');
+            const checkmark = document.querySelector('.checkmark');
+            checkbox.addEventListener('change', () => {
+                checkmark.classList.toggle('checked', checkbox.checked);
+            });
+        });
+    </script>
+</body>
+</html>
+{% endblock %}
