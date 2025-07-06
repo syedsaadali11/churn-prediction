@@ -1,249 +1,1221 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Prediction | RetentionAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --sea-green: #20b2aa;
+            --sea-green-light: #48d1cc;
+            --sea-green-dark: #008b8b;
+            --white: #ffffff;
+            --light-grey: #f8f9fa;
+            --medium-grey: #e9ecef;
+            --dark-grey: #6c757d;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --glass-hover: rgba(255, 255, 255, 0.98);
+            --glass-border: rgba(32, 178, 170, 0.2);
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-heavy: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
 
-{% block title %}Churn Prediction{% endblock %}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-{% block content %}
-    <div class="predict-container">
-        <h1 class="predict-heading">Customer Churn Prediction</h1>
-        <p class="predict-subtext">Enter customer details to predict churn probability and receive actionable insights.</p>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 50%, #ccfbf1 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+        }
 
-        <form method="POST" class="predict-form">
-            {% csrf_token %}
+        /* Animated Background */
+        .predict-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(32, 178, 170, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(72, 209, 204, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 50%);
+            animation: predictFloat 20s ease-in-out infinite;
+        }
 
-            <div class="input-group">
-                <label for="tenure">Tenure (months):</label>
-                <input type="number" id="tenure" name="tenure" required>
-            </div>
+        @keyframes predictFloat {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+        }
 
-            <div class="input-group">
-                <label for="monthly_charges">Monthly Charges ($):</label>
-                <input type="number" id="monthly_charges" name="monthly_charges" required>
-            </div>
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            min-height: 100vh;
+        }
 
-            <div class="input-group">
-                <label for="total_charges">Total Charges ($):</label>
-                <input type="number" id="total_charges" name="total_charges" required>
-            </div>
+        /* Form Section */
+        .form-section {
+            background: var(--white);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            height: fit-content;
+            box-shadow: var(--shadow-medium);
+        }
 
-            <h2 class="predict-subheading">Customer Demographics</h2>
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-            <div class="input-group">
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender">
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-            </div>
+        .form-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
 
-            <div class="input-group">
-                <label for="senior_citizen">Senior Citizen:</label>
-                <select id="senior_citizen" name="senior_citizen">
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-            </div>
+        .form-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
 
-            <div class="input-group">
-                <label for="partner">Partner:</label>
-                <select id="partner" name="partner">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>
-            </div>
+        /* Form Styles */
+        .prediction-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
 
-            <div class="input-group">
-                <label for="dependents">Dependents:</label>
-                <select id="dependents" name="dependents">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>
-            </div>
+        .form-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--sea-green);
+            margin: 2rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-            <h2 class="predict-subheading">Subscription Details</h2>
+        .form-section-title:first-of-type {
+            margin-top: 0;
+        }
 
-            <div class="input-group">
-                <label for="contract">Contract Type:</label>
-                <select id="contract" name="contract">
-                    <option value="Month-to-month">Month-to-Month</option>
-                    <option value="One year">One Year</option>
-                    <option value="Two year">Two Years</option>
-                </select>
-            </div>
+        .form-section-title i {
+            color: var(--sea-green);
+        }
 
-            <div class="input-group">
-                <label for="paperless_billing">Paperless Billing:</label>
-                <select id="paperless_billing" name="paperless_billing">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                </select>
-            </div>
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
 
-            <div class="input-group">
-                <label for="payment_method">Payment Method:</label>
-                <select id="payment_method" name="payment_method">
-                    <option value="Electronic check">Electronic Check</option>
-                    <option value="Mailed check">Mailed Check</option>
-                    <option value="Bank transfer (automatic)">Bank Transfer</option>
-                    <option value="Credit card (automatic)">Credit Card</option>
-                </select>
-            </div>
+        .form-group {
+            position: relative;
+        }
 
-            <button type="submit" class="predict-btn">Predict Churn</button>
-        </form>
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
 
-        {% if result %}
-        <div class="result-box" id="result-container">
-            <h2>Prediction Result</h2>
-            <p><strong>Churn Probability:</strong> {{ result.churn_probability }}</p>
-            <p><strong>Decision:</strong> {{ result.churn_decision }}</p>
+        .form-input, .form-select {
+            width: 100%;
+            padding: 1rem;
+            background: var(--light-grey);
+            border: 2px solid var(--medium-grey);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
 
-            <h3>📌 Churn Insights</h3>
-            <p>{{ result.reason }}</p>
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--sea-green);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.1);
+        }
 
-            <h3>🛠 How to Reduce Churn</h3>
-            <ul>
-                {% for tip in result.suggestions %}
-                    <li>{{ tip }}</li>
-                {% endfor %}
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-select {
+            cursor: pointer;
+        }
+
+        .form-select option {
+            background: var(--white);
+            color: var(--text-primary);
+        }
+
+        /* Radio Groups */
+        .radio-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-option {
+            position: relative;
+        }
+
+        .radio-input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .radio-label {
+            display: block;
+            padding: 0.75rem 1rem;
+            background: var(--light-grey);
+            border: 2px solid var(--medium-grey);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .radio-input:checked + .radio-label {
+            background: linear-gradient(135deg, var(--sea-green), var(--sea-green-light));
+            border-color: var(--sea-green);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(32, 178, 170, 0.3);
+        }
+
+        .radio-label:hover {
+            background: rgba(32, 178, 170, 0.1);
+            border-color: var(--sea-green);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, var(--sea-green), var(--sea-green-light));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 16px rgba(32, 178, 170, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(32, 178, 170, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Results Section */
+        .results-section {
+            background: var(--white);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .results-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Prediction Result */
+        .prediction-result {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--light-grey);
+            border-radius: 16px;
+            border: 2px solid var(--medium-grey);
+        }
+
+        .probability-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .probability-circle.high-risk {
+            background: linear-gradient(135deg, var(--error), #dc2626);
+        }
+
+        .probability-circle.medium-risk {
+            background: linear-gradient(135deg, var(--warning), #d97706);
+        }
+
+        .probability-circle.low-risk {
+            background: linear-gradient(135deg, var(--success), #16a34a);
+        }
+
+        .probability-circle::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            animation: circleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes circleGlow {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .prediction-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .prediction-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Insights */
+        .insights-section {
+            margin-top: 2rem;
+        }
+
+        .insights-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--sea-green);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .insight-item {
+            background: var(--light-grey);
+            border: 2px solid var(--medium-grey);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .insight-item:hover {
+            border-color: var(--sea-green);
+            background: rgba(32, 178, 170, 0.05);
+        }
+
+        .insight-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .insight-icon.reason {
+            background: linear-gradient(135deg, var(--error), #dc2626);
+        }
+
+        .insight-icon.suggestion {
+            background: linear-gradient(135deg, var(--success), #16a34a);
+        }
+
+        .insight-text {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--sea-green);
+        }
+
+        /* Messages */
+        .messages {
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.2);
+            color: var(--error);
+        }
+
+        .message.success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation Breadcrumb */
+        .breadcrumb {
+            background: var(--white);
+            border: 2px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .breadcrumb-list {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .breadcrumb-item {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-item a {
+            color: var(--sea-green);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--sea-green-dark);
+        }
+
+        .breadcrumb-item.active {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-muted);
+            margin: 0 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .results-section {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .radio-group {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .breadcrumb {
+                padding: 0.75rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .radio-group {
+                grid-template-columns: 1fr;
+            }
+
+            .form-section, .results-section {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Form validation styles */
+        .form-input.valid {
+            border-color: var(--success);
+        }
+
+        .form-input.invalid {
+            border-color: var(--error);
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--medium-grey);
+            border-top: 4px solid var(--sea-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="predict-bg"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="main-container">
+        <!-- Breadcrumb Navigation -->
+        <div class="breadcrumb" style="grid-column: 1 / -1;">
+            <ul class="breadcrumb-list">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-separator">
+                    <i class="fas fa-chevron-right"></i>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'dashboard' %}">Dashboard</a>
+                </li>
+                <li class="breadcrumb-separator">
+                    <i class="fas fa-chevron-right"></i>
+                </li>
+                <li class="breadcrumb-item active">Customer Prediction</li>
             </ul>
         </div>
 
-        <script>
-            // Auto-scroll to results and add visual effect
-            document.addEventListener('DOMContentLoaded', function() {
-                const resultElement = document.getElementById('result-container');
-                if (resultElement) {
-                    // Smooth scroll to results
-                    resultElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    
-                    // Add visual highlight effect
-                    resultElement.style.animation = 'highlight 1.5s ease-out';
-                }
-            });
-        </script>
-        {% endif %}
+        <!-- Form Section -->
+        <div class="form-section">
+            <div class="form-header">
+                <h1 class="form-title">Customer Churn Prediction</h1>
+                <p class="form-subtitle">
+                    Enter customer details below to predict their likelihood of churning using our advanced AI model
+                </p>
+            </div>
+
+            <!-- Django Messages -->
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    <i class="fas fa-{% if message.tags == 'error' %}exclamation-triangle{% else %}check-circle{% endif %}"></i>
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="post" class="prediction-form" id="predictionForm">
+                {% csrf_token %}
+                
+                <!-- Basic Information -->
+                <div class="form-section-title">
+                    <i class="fas fa-user"></i>
+                    Basic Information
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tenure" class="form-label">Tenure (months)</label>
+                        <input 
+                            type="number" 
+                            id="tenure" 
+                            name="tenure" 
+                            class="form-input"
+                            placeholder="e.g., 24"
+                            min="0"
+                            max="100"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="monthly_charges" class="form-label">Monthly Charges ($)</label>
+                        <input 
+                            type="number" 
+                            id="monthly_charges" 
+                            name="monthly_charges" 
+                            class="form-input"
+                            placeholder="e.g., 75.50"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="total_charges" class="form-label">Total Charges ($)</label>
+                    <input 
+                        type="number" 
+                        id="total_charges" 
+                        name="total_charges" 
+                        class="form-input"
+                        placeholder="e.g., 1500.00"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+                </div>
+
+                <!-- Demographics -->
+                <div class="form-section-title">
+                    <i class="fas fa-users"></i>
+                    Demographics
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Gender</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="gender_male" name="gender" value="Male" class="radio-input" required>
+                            <label for="gender_male" class="radio-label">Male</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="gender_female" name="gender" value="Female" class="radio-input">
+                            <label for="gender_female" class="radio-label">Female</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Senior Citizen</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="senior_no" name="senior_citizen" value="0" class="radio-input" required>
+                            <label for="senior_no" class="radio-label">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="senior_yes" name="senior_citizen" value="1" class="radio-input">
+                            <label for="senior_yes" class="radio-label">Yes</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Partner</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="partner_no" name="partner" value="No" class="radio-input" required>
+                                <label for="partner_no" class="radio-label">No</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="partner_yes" name="partner" value="Yes" class="radio-input">
+                                <label for="partner_yes" class="radio-label">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Dependents</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="dependents_no" name="dependents" value="No" class="radio-input" required>
+                                <label for="dependents_no" class="radio-label">No</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="dependents_yes" name="dependents" value="Yes" class="radio-input">
+                                <label for="dependents_yes" class="radio-label">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Services -->
+                <div class="form-section-title">
+                    <i class="fas fa-wifi"></i>
+                    Services
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Phone Service</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="phone_no" name="phone_service" value="No" class="radio-input" required>
+                            <label for="phone_no" class="radio-label">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="phone_yes" name="phone_service" value="Yes" class="radio-input">
+                            <label for="phone_yes" class="radio-label">Yes</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Multiple Lines</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="lines_no" name="multiple_lines" value="No" class="radio-input" required>
+                            <label for="lines_no" class="radio-label">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="lines_yes" name="multiple_lines" value="Yes" class="radio-input">
+                            <label for="lines_yes" class="radio-label">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="lines_no_phone" name="multiple_lines" value="No phone service" class="radio-input">
+                            <label for="lines_no_phone" class="radio-label">No Phone</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Internet Service</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="internet_dsl" name="internet_service" value="DSL" class="radio-input" required>
+                            <label for="internet_dsl" class="radio-label">DSL</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="internet_fiber" name="internet_service" value="Fiber optic" class="radio-input">
+                            <label for="internet_fiber" class="radio-label">Fiber Optic</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="internet_no" name="internet_service" value="No" class="radio-input">
+                            <label for="internet_no" class="radio-label">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ‑‑‑‑‑ Additional Services (Fixed Layout) ‑‑‑‑‑ -->
+<div class="form-section-title">
+    <i class="fas fa-shield-alt"></i>
+    Additional Services
+</div>
+
+<!-- Online Security -->
+<div class="form-group">
+    <label class="form-label">Online Security</label>
+    <div class="radio-group">
+        <div class="radio-option">
+            <input type="radio" id="security_yes" name="online_security" value="Yes" class="radio-input" required>
+            <label for="security_yes" class="radio-label">Yes</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="security_no" name="online_security" value="No" class="radio-input">
+            <label for="security_no" class="radio-label">No</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="security_none" name="online_security" value="No internet service" class="radio-input">
+            <label for="security_none" class="radio-label">No internet service</label>
+        </div>
+    </div>
+</div>
+
+<!-- Online Backup -->
+<div class="form-group">
+    <label class="form-label">Online Backup</label>
+    <div class="radio-group">
+        <div class="radio-option">
+            <input type="radio" id="backup_yes" name="online_backup" value="Yes" class="radio-input" required>
+            <label for="backup_yes" class="radio-label">Yes</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="backup_no" name="online_backup" value="No" class="radio-input">
+            <label for="backup_no" class="radio-label">No</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="backup_none" name="online_backup" value="No internet service" class="radio-input">
+            <label for="backup_none" class="radio-label">No internet service</label>
+        </div>
+    </div>
+</div>
+
+<!-- Device Protection -->
+<div class="form-group">
+    <label class="form-label">Device Protection</label>
+    <div class="radio-group">
+        <div class="radio-option">
+            <input type="radio" id="device_yes" name="device_protection" value="Yes" class="radio-input" required>
+            <label for="device_yes" class="radio-label">Yes</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="device_no" name="device_protection" value="No" class="radio-input">
+            <label for="device_no" class="radio-label">No</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="device_none" name="device_protection" value="No internet service" class="radio-input">
+            <label for="device_none" class="radio-label">No internet service</label>
+        </div>
+    </div>
+</div>
+
+<!-- Tech Support -->
+<div class="form-group">
+    <label class="form-label">Tech Support</label>
+    <div class="radio-group">
+        <div class="radio-option">
+            <input type="radio" id="tech_yes" name="tech_support" value="Yes" class="radio-input" required>
+            <label for="tech_yes" class="radio-label">Yes</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="tech_no" name="tech_support" value="No" class="radio-input">
+            <label for="tech_no" class="radio-label">No</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="tech_none" name="tech_support" value="No internet service" class="radio-input">
+            <label for="tech_none" class="radio-label">No internet service</label>
+        </div>
+    </div>
+</div>
+
+<!-- Streaming TV -->
+<div class="form-group">
+    <label class="form-label">Streaming TV</label>
+    <div class="radio-group">
+        <div class="radio-option">
+            <input type="radio" id="tv_yes" name="streaming_tv" value="Yes" class="radio-input" required>
+            <label for="tv_yes" class="radio-label">Yes</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="tv_no" name="streaming_tv" value="No" class="radio-input">
+            <label for="tv_no" class="radio-label">No</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="tv_none" name="streaming_tv" value="No internet service" class="radio-input">
+            <label for="tv_none" class="radio-label">No internet service</label>
+        </div>
+    </div>
+</div>
+
+<!-- Streaming Movies -->
+<div class="form-group">
+    <label class="form-label">Streaming Movies</label>
+    <div class="radio-group">
+        <div class="radio-option">
+            <input type="radio" id="movies_yes" name="streaming_movies" value="Yes" class="radio-input" required>
+            <label for="movies_yes" class="radio-label">Yes</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="movies_no" name="streaming_movies" value="No" class="radio-input">
+            <label for="movies_no" class="radio-label">No</label>
+        </div>
+        <div class="radio-option">
+            <input type="radio" id="movies_none" name="streaming_movies" value="No internet service" class="radio-input">
+            <label for="movies_none" class="radio-label">No internet service</label>
+        </div>
+    </div>
+</div>
+
+                <!-- Contract & Payment -->
+                <div class="form-section-title">
+                    <i class="fas fa-file-contract"></i>
+                    Contract & Payment
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Contract</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="contract_month" name="contract" value="Month-to-month" class="radio-input" required>
+                            <label for="contract_month" class="radio-label">Month-to-month</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="contract_one" name="contract" value="One year" class="radio-input">
+                            <label for="contract_one" class="radio-label">One year</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="contract_two" name="contract" value="Two year" class="radio-input">
+                            <label for="contract_two" class="radio-label">Two year</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Paperless Billing</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="paperless_no" name="paperless_billing" value="No" class="radio-input" required>
+                            <label for="paperless_no" class="radio-label">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="paperless_yes" name="paperless_billing" value="Yes" class="radio-input">
+                            <label for="paperless_yes" class="radio-label">Yes</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Payment Method</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="payment_electronic" name="payment_method" value="Electronic check" class="radio-input" required>
+                            <label for="payment_electronic" class="radio-label">Electronic check</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="payment_mailed" name="payment_method" value="Mailed check" class="radio-input">
+                            <label for="payment_mailed" class="radio-label">Mailed check</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="payment_bank" name="payment_method" value="Bank transfer (automatic)" class="radio-input">
+                            <label for="payment_bank" class="radio-label">Bank transfer</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="payment_credit" name="payment_method" value="Credit card (automatic)" class="radio-input">
+                            <label for="payment_credit" class="radio-label">Credit card</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fas fa-brain"></i>
+                    <span>Predict Churn Risk</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section">
+            <div class="results-header">
+                <h2 class="results-title">Prediction Results</h2>
+                <p class="results-subtitle">AI-powered churn analysis</p>
+            </div>
+
+            {% if result %}
+            <div class="prediction-result">
+                <div class="probability-circle {% if result.churn_probability > 0.7 %}high-risk{% elif result.churn_probability > 0.4 %}medium-risk{% else %}low-risk{% endif %}">
+                    {{ result.churn_probability|floatformat:0 }}%
+                </div>
+                <div class="prediction-label">{{ result.churn_decision }}</div>
+                <div class="prediction-desc">
+                    {% if result.churn_probability > 0.7 %}
+                        This customer has a high risk of churning
+                    {% elif result.churn_probability > 0.4 %}
+                        This customer has a moderate risk of churning
+                    {% else %}
+                        This customer has a low risk of churning
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if result.reason %}
+            <div class="insights-section">
+                <h3 class="insights-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Risk Factors
+                </h3>
+                {% for reason in result.reason %}
+                <div class="insight-item">
+                    <div class="insight-icon reason">
+                        <i class="fas fa-exclamation"></i>
+                    </div>
+                    <div class="insight-text">{{ reason }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if result.suggestions %}
+            <div class="insights-section">
+                <h3 class="insights-title">
+                    <i class="fas fa-lightbulb"></i>
+                    Recommendations
+                </h3>
+                {% for suggestion in result.suggestions %}
+                <div class="insight-item">
+                    <div class="insight-icon suggestion">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="insight-text">{{ suggestion }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-chart-line"></i>
+                <p>Fill out the form to get AI-powered churn prediction results</p>
+            </div>
+            {% endif %}
+        </div>
     </div>
 
-    <style>
-        .predict-container {
-            text-align: center;
-            padding: 50px 10%;
-        }
+    <script>
+        // Form submission with loading state
+        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('span');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+            btnText.textContent = 'Analyzing...';
+            loadingOverlay.style.display = 'flex';
+            
+            // Reset after 10 seconds if form doesn't redirect
+            setTimeout(() => {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+                btnText.textContent = 'Predict Churn Risk';
+                loadingOverlay.style.display = 'none';
+            }, 10000);
+        });
 
-        .predict-heading {
-            font-size: 2.8rem;
-            background: linear-gradient(45deg, #00f7ff, #0066ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-        }
-
-        .predict-subtext {
-            font-size: 1.1rem;
-            color: #ccc;
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.7;
-        }
-
-        .predict-subheading {
-            font-size: 1.4rem;
-            margin-top: 30px;
-            color: #00f7ff;
-        }
-
-        .predict-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 30px;
-        }
-
-        .input-group {
-            width: 50%;
-            text-align: left;
-            margin-bottom: 15px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 1rem;
-            color: #00f7ff;
-            margin-bottom: 5px;
-        }
-
-        .predict-form input, .predict-form select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            outline: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1rem;
-        }
-
-        .predict-btn {
-            padding: 12px 24px;
-            background: linear-gradient(45deg, #0066ff, #00f7ff);
-            border: none;
-            border-radius: 30px;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 20px;
-        }
-
-        .predict-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
-        }
-
-        .result-box {
-            margin-top: 40px;
-            color: white;
-            text-align: left;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            width: 60%;
-            margin: 40px auto;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .result-box h3 {
-            color: #00f7ff;
-            margin-top: 10px;
-        }
-
-        .result-box ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .result-box ul li {
-            margin-bottom: 5px;
-        }
-
-        @keyframes highlight {
-            0% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0); }
-            50% { box-shadow: 0 0 25px 10px rgba(0, 247, 255, 0.3); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0); }
-        }
-
-        @media (max-width: 900px) {
-            .input-group {
-                width: 80%;
-            }
-
-            .result-box {
-                width: 90%;
+        // Auto-calculate total charges based on tenure and monthly charges
+        function updateTotalCharges() {
+            const tenure = parseFloat(document.getElementById('tenure').value) || 0;
+            const monthlyCharges = parseFloat(document.getElementById('monthly_charges').value) || 0;
+            const totalChargesInput = document.getElementById('total_charges');
+            
+            if (tenure > 0 && monthlyCharges > 0) {
+                const estimatedTotal = (tenure * monthlyCharges).toFixed(2);
+                if (!totalChargesInput.value) {
+                    totalChargesInput.value = estimatedTotal;
+                    totalChargesInput.classList.add('valid');
+                    setTimeout(() => {
+                        totalChargesInput.classList.remove('valid');
+                    }, 2000);
+                }
             }
         }
-    </style>
-{% endblock %}
+
+        document.getElementById('tenure').addEventListener('input', updateTotalCharges);
+        document.getElementById('monthly_charges').addEventListener('input', updateTotalCharges);
+
+        // Form validation
+        function validateForm() {
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value || (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`))) {
+                    isValid = false;
+                    field.classList.add('invalid');
+                } else {
+                    field.classList.remove('invalid');
+                }
+            });
+            
+            return isValid;
+        }
+
+        // Real-time validation
+        document.querySelectorAll('input[required]').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.classList.add('invalid');
+                } else {
+                    this.classList.remove('invalid');
+                    this.classList.add('valid');
+                    setTimeout(() => {
+                        this.classList.remove('valid');
+                    }, 1000);
+                }
+            });
+        });
+
+        // Radio button animations
+        document.querySelectorAll('.radio-input').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Remove active state from siblings
+                const siblings = document.querySelectorAll(`input[name="${this.name}"]`);
+                siblings.forEach(sibling => {
+                    sibling.nextElementSibling.style.transform = 'translateY(0)';
+                });
+                
+                // Add active state to selected
+                this.nextElementSibling.style.transform = 'translateY(-2px)';
+            });
+        });
+
+        // Auto-hide messages after 5 seconds
+        setTimeout(() => {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(message => {
+                message.style.opacity = '0';
+                message.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    message.remove();
+                }, 300);
+            });
+        }, 5000);
+
+        // Smooth scroll to results when form is submitted
+        {% if result %}
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultsSection = document.querySelector('.results-section');
+            if (resultsSection && window.innerWidth > 1024) {
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+        {% endif %}
+
+        // Progress indicator for form completion
+        function updateFormProgress() {
+            const totalFields = document.querySelectorAll('[required]').length;
+            const completedFields = document.querySelectorAll('[required]:valid').length;
+            const progress = (completedFields / totalFields) * 100;
+            
+            // You could add a progress bar here
+            console.log(`Form completion: ${progress.toFixed(0)}%`);
+        }
+
+        // Update progress on input change
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('change', updateFormProgress);
+        });
+
+        // Form section collapse/expand functionality
+        document.querySelectorAll('.form-section-title').forEach(title => {
+            title.addEventListener('click', function() {
+                const nextElement = this.nextElementSibling;
+                if (nextElement) {
+                    const isCollapsed = nextElement.style.display === 'none';
+                    nextElement.style.display = isCollapsed ? 'block' : 'none';
+                    
+                    // Rotate icon
+                    const icon = this.querySelector('i');
+                    if (icon) {
+                        icon.style.transform = isCollapsed ? 'rotate(0deg)' : 'rotate(90deg)';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

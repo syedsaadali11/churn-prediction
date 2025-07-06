@@ -1,114 +1,1264 @@
-{% extends 'base.html' %}
-
-{% block title %}Terms & Privacy{% endblock %}
-
-{% block content %}
-    <div class="terms-container">
-        <h1 class="terms-heading">Terms & Privacy Policy</h1>
-        <p class="terms-subtext">Read our terms of service and privacy policy before using our platform.</p>
-
-        <div class="terms-section">
-            <div class="terms-box">
-                <h2 class="terms-title">Terms of Service <i class="fas fa-chevron-down"></i></h2>
-                <div class="terms-content">
-                    <p>By using our service, you agree to abide by our terms and conditions...</p>
-                </div>
-            </div>
-            
-            <div class="terms-box">
-                <h2 class="terms-title">Privacy Policy <i class="fas fa-chevron-down"></i></h2>
-                <div class="terms-content">
-                    <p>Your privacy is important to us. We collect and process data according to our privacy standards...</p>
-                </div>
-            </div>
-
-            <div class="terms-box">
-                <h2 class="terms-title">User Responsibilities <i class="fas fa-chevron-down"></i></h2>
-                <div class="terms-content">
-                    <p>Users must ensure compliance with applicable laws and avoid misuse of the platform...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Privacy | RetentionAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <style>
-        .terms-container {
-            text-align: center;
-            padding: 60px 10%;
+        :root {
+            --primary-sea-green: #20b2aa;
+            --primary-sea-green-light: #48d1cc;
+            --primary-sea-green-dark: #008b8b;
+            --accent-sea-green: #40e0d0;
+            --white: #ffffff;
+            --light-gray: #f8fafc;
+            --medium-gray: #e2e8f0;
+            --dark-gray: #64748b;
+            --text-dark: #1e293b;
+            --text-medium: #475569;
+            --text-light: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
 
-        .terms-heading {
-            font-size: 3rem;
-            background: linear-gradient(45deg, #00f7ff, #0066ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .terms-subtext {
-            font-size: 1.2rem;
-            color: #ccc;
-            max-width: 700px;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 50%, #f0fdfa 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--medium-gray);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
             margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        .terms-section {
-            max-width: 800px;
-            margin: 40px auto;
-            text-align: left;
-        }
-
-        .terms-box {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .terms-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
-        }
-
-        .terms-title {
-            font-size: 1.5rem;
-            color: #00f7ff;
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary-sea-green);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--primary-sea-green-dark);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-sea-green);
+        }
+
+        .back-btn {
+            background: var(--white);
+            border: 2px solid var(--primary-sea-green);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: var(--primary-sea-green);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-sea-green);
+            color: var(--white);
+            transform: translateX(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 4rem 0;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-medium);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .last-updated {
+            background: var(--light-gray);
+            border: 2px solid var(--medium-gray);
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            background: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: 16px;
+            padding: 0.5rem;
+            margin-bottom: 3rem;
+            overflow-x: auto;
+            box-shadow: var(--shadow-md);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            color: var(--text-medium);
+            font-weight: 500;
             cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: inherit;
         }
 
-        .terms-content {
+        .tab-btn:hover {
+            color: var(--primary-sea-green);
+            background: var(--light-gray);
+        }
+
+        .tab-btn.active {
+            background: var(--primary-sea-green);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Content Sections */
+        .content-section {
             display: none;
-            padding-top: 10px;
-            color: #cccccc;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        .terms-box.active .terms-content {
+        .content-section.active {
             display: block;
         }
 
-        @media (max-width: 900px) {
-            .terms-section {
-                max-width: 100%;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-container {
+            background: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-sea-green), var(--accent-sea-green));
+        }
+
+        /* Typography */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+        }
+
+        .section-icon.terms {
+            background: linear-gradient(135deg, var(--primary-sea-green), var(--primary-sea-green-light));
+        }
+
+        .section-icon.privacy {
+            background: linear-gradient(135deg, var(--primary-sea-green-dark), var(--primary-sea-green));
+        }
+
+        .section-icon.cookies {
+            background: linear-gradient(135deg, var(--accent-sea-green), var(--primary-sea-green-light));
+        }
+
+        .section-icon.gdpr {
+            background: linear-gradient(135deg, var(--success), var(--primary-sea-green));
+        }
+
+        .subsection-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--primary-sea-green);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .subsection-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(to bottom, var(--primary-sea-green), var(--accent-sea-green));
+            border-radius: 2px;
+        }
+
+        .content-text {
+            color: var(--text-medium);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .content-text strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .content-text a {
+            color: var(--primary-sea-green);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .content-text a:hover {
+            color: var(--primary-sea-green-dark);
+            text-decoration: underline;
+        }
+
+        /* Lists */
+        .content-list {
+            list-style: none;
+            margin: 1.5rem 0;
+            padding-left: 0;
+        }
+
+        .content-list li {
+            position: relative;
+            padding: 0.75rem 0 0.75rem 2rem;
+            color: var(--text-medium);
+            line-height: 1.6;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .content-list li:last-child {
+            border-bottom: none;
+        }
+
+        .content-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1.2rem;
+            width: 8px;
+            height: 8px;
+            background: var(--primary-sea-green);
+            border-radius: 50%;
+        }
+
+        .content-list li strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* Numbered Lists */
+        .numbered-list {
+            counter-reset: item;
+            list-style: none;
+            margin: 1.5rem 0;
+            padding-left: 0;
+        }
+
+        .numbered-list li {
+            position: relative;
+            padding: 1rem 0 1rem 3rem;
+            color: var(--text-medium);
+            line-height: 1.6;
+            border-bottom: 1px solid var(--medium-gray);
+            counter-increment: item;
+        }
+
+        .numbered-list li:last-child {
+            border-bottom: none;
+        }
+
+        .numbered-list li::before {
+            content: counter(item);
+            position: absolute;
+            left: 0;
+            top: 1rem;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--primary-sea-green), var(--accent-sea-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            background: rgba(32, 178, 170, 0.1);
+            border: 2px solid rgba(32, 178, 170, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .highlight-box.info {
+            background: rgba(64, 224, 208, 0.1);
+            border-color: rgba(64, 224, 208, 0.3);
+        }
+
+        .highlight-box.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .highlight-box.success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .highlight-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-text {
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            background: var(--white);
+            border: 2px solid var(--primary-sea-green);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .contact-text {
+            color: var(--text-medium);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-sea-green);
+            border-radius: 10px;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid var(--primary-sea-green);
+        }
+
+        .contact-link:hover {
+            background: var(--primary-sea-green-dark);
+            border-color: var(--primary-sea-green-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-link.secondary {
+            background: var(--white);
+            border-color: var(--primary-sea-green);
+            color: var(--primary-sea-green);
+        }
+
+        .contact-link.secondary:hover {
+            background: var(--primary-sea-green);
+            color: var(--white);
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: var(--light-gray);
+            border: 2px solid var(--medium-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .toc-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-link {
+            color: var(--text-medium);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        .toc-link:hover {
+            color: var(--primary-sea-green);
+            background: var(--white);
+        }
+
+        /* Messages */
+        .messages {
+            margin-bottom: 2rem;
+        }
+
+        .message {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+            border: 2px solid;
+        }
+
+        .message.success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                gap: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .nav-container {
+                padding: 0 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .tab-navigation {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .tab-btn {
+                padding: 0.75rem 1rem;
+            }
+            
+            .content-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .content-container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .navbar, .tab-navigation, .contact-info {
+                display: none;
+            }
+            
+            .content-section {
+                display: block !important;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .content-container {
+                background: white;
+                border: 1px solid #ccc;
             }
         }
     </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="logo">RetentionAI</a>
+            
+            <ul class="nav-menu">
+                <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+                <li><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>
+                <li><a href="{% url 'services' %}" class="nav-link">Services</a></li>
+                <li><a href="{% url 'about' %}" class="nav-link">About</a></li>
+                <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <a href="{% url 'home' %}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Django Messages -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                <i class="fas fa-check-circle"></i>
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">Terms & Privacy</h1>
+            <p class="hero-subtitle">
+                Your privacy and trust are important to us. Please review our terms of service, 
+                privacy policy, and data protection practices.
+            </p>
+            <div class="last-updated">
+                <i class="fas fa-calendar-alt"></i>
+                Last updated: January 15, 2024
+            </div>
+        </section>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="showTab('terms')">
+                <i class="fas fa-file-contract"></i>
+                Terms of Service
+            </button>
+            <button class="tab-btn" onclick="showTab('privacy')">
+                <i class="fas fa-shield-alt"></i>
+                Privacy Policy
+            </button>
+            <button class="tab-btn" onclick="showTab('cookies')">
+                <i class="fas fa-cookie-bite"></i>
+                Cookie Policy
+            </button>
+            <button class="tab-btn" onclick="showTab('gdpr')">
+                <i class="fas fa-balance-scale"></i>
+                GDPR Compliance
+            </button>
+        </div>
+
+        <!-- Terms of Service -->
+        <section id="terms" class="content-section active">
+            <div class="content-container">
+                <h2 class="section-title">
+                    <div class="section-icon terms">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    Terms of Service
+                </h2>
+
+                <div class="toc">
+                    <div class="toc-title">
+                        <i class="fas fa-list"></i>
+                        Table of Contents
+                    </div>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#acceptance" class="toc-link">1. Acceptance of Terms</a></li>
+                        <li class="toc-item"><a href="#services" class="toc-link">2. Description of Services</a></li>
+                        <li class="toc-item"><a href="#accounts" class="toc-link">3. User Accounts</a></li>
+                        <li class="toc-item"><a href="#usage" class="toc-link">4. Acceptable Use</a></li>
+                        <li class="toc-item"><a href="#payment" class="toc-link">5. Payment Terms</a></li>
+                        <li class="toc-item"><a href="#intellectual" class="toc-link">6. Intellectual Property</a></li>
+                        <li class="toc-item"><a href="#limitation" class="toc-link">7. Limitation of Liability</a></li>
+                        <li class="toc-item"><a href="#termination" class="toc-link">8. Termination</a></li>
+                    </ul>
+                </div>
+
+                <div id="acceptance">
+                    <h3 class="subsection-title">1. Acceptance of Terms</h3>
+                    <p class="content-text">
+                        By accessing and using RetentionAI's services, you accept and agree to be bound by the terms and provision of this agreement. 
+                        If you do not agree to abide by the above, please do not use this service.
+                    </p>
+                    <div class="highlight-box info">
+                        <div class="highlight-title">
+                            <i class="fas fa-info-circle"></i>
+                            Important Notice
+                        </div>
+                        <div class="highlight-text">
+                            These terms constitute a legally binding agreement between you and RetentionAI. 
+                            Please read them carefully before using our services.
+                        </div>
+                    </div>
+                </div>
+
+                <div id="services">
+                    <h3 class="subsection-title">2. Description of Services</h3>
+                    <p class="content-text">
+                        RetentionAI provides AI-powered customer churn prediction and analytics services. Our platform includes:
+                    </p>
+                    <ul class="content-list">
+                        <li><strong>Churn Prediction Models:</strong> Machine learning algorithms that predict customer churn probability</li>
+                        <li><strong>Analytics Dashboard:</strong> Real-time insights and visualizations of customer behavior</li>
+                        <li><strong>API Access:</strong> Programmatic access to our prediction models and data</li>
+                        <li><strong>Batch Processing:</strong> Large-scale data processing capabilities</li>
+                        <li><strong>Custom Integrations:</strong> Tailored solutions for enterprise clients</li>
+                    </ul>
+                </div>
+
+                <div id="accounts">
+                    <h3 class="subsection-title">3. User Accounts</h3>
+                    <p class="content-text">
+                        To access certain features of our service, you must register for an account. You agree to:
+                    </p>
+                    <ol class="numbered-list">
+                        <li>Provide accurate, current, and complete information during registration</li>
+                        <li>Maintain the security of your password and account</li>
+                        <li>Notify us immediately of any unauthorized use of your account</li>
+                        <li>Accept responsibility for all activities under your account</li>
+                        <li>Not share your account credentials with third parties</li>
+                    </ol>
+                </div>
+
+                <div id="usage">
+                    <h3 class="subsection-title">4. Acceptable Use</h3>
+                    <p class="content-text">
+                        You agree not to use our services for any unlawful purpose or in any way that could damage, 
+                        disable, overburden, or impair our servers or networks.
+                    </p>
+                    <div class="highlight-box warning">
+                        <div class="highlight-title">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Prohibited Activities
+                        </div>
+                        <div class="highlight-text">
+                            Reverse engineering, attempting to extract our algorithms, or using our service to compete 
+                            directly with RetentionAI is strictly prohibited.
+                        </div>
+                    </div>
+                </div>
+
+                <div id="payment">
+                    <h3 class="subsection-title">5. Payment Terms</h3>
+                    <p class="content-text">
+                        Subscription fees are billed in advance on a monthly or annual basis. All fees are non-refundable 
+                        except as required by law or as specifically stated in our refund policy.
+                    </p>
+                    <ul class="content-list">
+                        <li><strong>Billing Cycle:</strong> Monthly or annual subscriptions</li>
+                        <li><strong>Payment Methods:</strong> Credit card, bank transfer, or invoice (enterprise)</li>
+                        <li><strong>Late Payments:</strong> Service may be suspended for overdue accounts</li>
+                        <li><strong>Price Changes:</strong> 30-day notice for subscription price changes</li>
+                    </ul>
+                </div>
+
+                <div id="intellectual">
+                    <h3 class="subsection-title">6. Intellectual Property</h3>
+                    <p class="content-text">
+                        The service and its original content, features, and functionality are and will remain the exclusive 
+                        property of RetentionAI and its licensors. The service is protected by copyright, trademark, and other laws.
+                    </p>
+                </div>
+
+                <div id="limitation">
+                    <h3 class="subsection-title">7. Limitation of Liability</h3>
+                    <p class="content-text">
+                        In no event shall RetentionAI be liable for any indirect, incidental, special, consequential, 
+                        or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.
+                    </p>
+                </div>
+
+                <div id="termination">
+                    <h3 class="subsection-title">8. Termination</h3>
+                    <p class="content-text">
+                        We may terminate or suspend your account and bar access to the service immediately, without prior notice 
+                        or liability, under our sole discretion, for any reason whatsoever and without limitation.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Policy -->
+        <section id="privacy" class="content-section">
+            <div class="content-container">
+                <h2 class="section-title">
+                    <div class="section-icon privacy">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    Privacy Policy
+                </h2>
+
+                <p class="content-text">
+                    At RetentionAI, we take your privacy seriously. This Privacy Policy explains how we collect, 
+                    use, disclose, and safeguard your information when you use our service.
+                </p>
+
+                <h3 class="subsection-title">Information We Collect</h3>
+                <p class="content-text">We collect information you provide directly to us, such as:</p>
+                <ul class="content-list">
+                    <li><strong>Account Information:</strong> Name, email address, company details</li>
+                    <li><strong>Customer Data:</strong> Data you upload for churn prediction analysis</li>
+                    <li><strong>Usage Data:</strong> How you interact with our platform</li>
+                    <li><strong>Technical Data:</strong> IP address, browser type, device information</li>
+                    <li><strong>Communication Data:</strong> Support requests and feedback</li>
+                </ul>
+
+                <h3 class="subsection-title">How We Use Your Information</h3>
+                <p class="content-text">We use the information we collect to:</p>
+                <ol class="numbered-list">
+                    <li>Provide, maintain, and improve our services</li>
+                    <li>Process transactions and send related information</li>
+                    <li>Send technical notices and support messages</li>
+                    <li>Respond to your comments and questions</li>
+                    <li>Develop new products and services</li>
+                    <li>Comply with legal obligations</li>
+                </ol>
+
+                <div class="highlight-box success">
+                    <div class="highlight-title">
+                        <i class="fas fa-lock"></i>
+                        Data Security
+                    </div>
+                    <div class="highlight-text">
+                        We implement appropriate technical and organizational security measures to protect your personal 
+                        information against unauthorized access, alteration, disclosure, or destruction.
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Data Sharing and Disclosure</h3>
+                <p class="content-text">
+                    We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, 
+                    except in the following circumstances:
+                </p>
+                <ul class="content-list">
+                    <li><strong>Service Providers:</strong> Trusted partners who assist in operating our platform</li>
+                    <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
+                    <li><strong>Business Transfers:</strong> In connection with a merger, acquisition, or sale</li>
+                    <li><strong>Consent:</strong> When you have given explicit consent</li>
+                </ul>
+
+                <h3 class="subsection-title">Data Retention</h3>
+                <p class="content-text">
+                    We retain your personal information for as long as necessary to provide our services and fulfill 
+                    the purposes outlined in this privacy policy, unless a longer retention period is required by law.
+                </p>
+
+                <h3 class="subsection-title">Your Rights</h3>
+                <p class="content-text">You have the right to:</p>
+                <ul class="content-list">
+                    <li><strong>Access:</strong> Request copies of your personal data</li>
+                    <li><strong>Rectification:</strong> Request correction of inaccurate data</li>
+                    <li><strong>Erasure:</strong> Request deletion of your personal data</li>
+                    <li><strong>Portability:</strong> Request transfer of your data</li>
+                    <li><strong>Objection:</strong> Object to processing of your personal data</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Cookie Policy -->
+        <section id="cookies" class="content-section">
+            <div class="content-container">
+                <h2 class="section-title">
+                    <div class="section-icon cookies">
+                        <i class="fas fa-cookie-bite"></i>
+                    </div>
+                    Cookie Policy
+                </h2>
+
+                <p class="content-text">
+                    This Cookie Policy explains how RetentionAI uses cookies and similar technologies to recognize you 
+                    when you visit our platform.
+                </p>
+
+                <h3 class="subsection-title">What Are Cookies?</h3>
+                <p class="content-text">
+                    Cookies are small data files that are placed on your computer or mobile device when you visit a website. 
+                    They are widely used to make websites work more efficiently and provide information to website owners.
+                </p>
+
+                <h3 class="subsection-title">Types of Cookies We Use</h3>
+                <ul class="content-list">
+                    <li><strong>Essential Cookies:</strong> Required for the platform to function properly</li>
+                    <li><strong>Performance Cookies:</strong> Help us understand how visitors interact with our platform</li>
+                    <li><strong>Functional Cookies:</strong> Remember your preferences and settings</li>
+                    <li><strong>Analytics Cookies:</strong> Collect information about platform usage</li>
+                </ul>
+
+                <div class="highlight-box info">
+                    <div class="highlight-title">
+                        <i class="fas fa-cog"></i>
+                        Cookie Management
+                    </div>
+                    <div class="highlight-text">
+                        You can control and manage cookies through your browser settings. However, disabling certain 
+                        cookies may affect the functionality of our platform.
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Third-Party Cookies</h3>
+                <p class="content-text">
+                    We may use third-party services that place cookies on your device, including:
+                </p>
+                <ul class="content-list">
+                    <li><strong>Google Analytics:</strong> For website analytics and performance monitoring</li>
+                    <li><strong>Intercom:</strong> For customer support and communication</li>
+                    <li><strong>Stripe:</strong> For payment processing (if applicable)</li>
+                </ul>
+
+                <h3 class="subsection-title">Cookie Consent</h3>
+                <p class="content-text">
+                    By continuing to use our platform, you consent to our use of cookies as described in this policy. 
+                    You can withdraw your consent at any time by adjusting your browser settings.
+                </p>
+            </div>
+        </section>
+
+        <!-- GDPR Compliance -->
+        <section id="gdpr" class="content-section">
+            <div class="content-container">
+                <h2 class="section-title">
+                    <div class="section-icon gdpr">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    GDPR Compliance
+                </h2>
+
+                <p class="content-text">
+                    RetentionAI is committed to complying with the General Data Protection Regulation (GDPR) and 
+                    protecting the privacy rights of individuals in the European Union.
+                </p>
+
+                <h3 class="subsection-title">Legal Basis for Processing</h3>
+                <p class="content-text">We process personal data based on the following legal grounds:</p>
+                <ul class="content-list">
+                    <li><strong>Contract:</strong> To perform our contractual obligations</li>
+                    <li><strong>Legitimate Interest:</strong> For business operations and improvements</li>
+                    <li><strong>Consent:</strong> When you have given explicit consent</li>
+                    <li><strong>Legal Obligation:</strong> To comply with legal requirements</li>
+                </ul>
+
+                <h3 class="subsection-title">Data Subject Rights</h3>
+                <p class="content-text">Under GDPR, you have the following rights:</p>
+                <ol class="numbered-list">
+                    <li><strong>Right to Information:</strong> Know how your data is processed</li>
+                    <li><strong>Right of Access:</strong> Obtain copies of your personal data</li>
+                    <li><strong>Right to Rectification:</strong> Correct inaccurate personal data</li>
+                    <li><strong>Right to Erasure:</strong> Request deletion of your data</li>
+                    <li><strong>Right to Restrict Processing:</strong> Limit how we use your data</li>
+                    <li><strong>Right to Data Portability:</strong> Transfer your data to another service</li>
+                    <li><strong>Right to Object:</strong> Object to certain types of processing</li>
+                    <li><strong>Rights Related to Automated Decision Making:</strong> Protection from automated decisions</li>
+                </ol>
+
+                <div class="highlight-box success">
+                    <div class="highlight-title">
+                        <i class="fas fa-shield-alt"></i>
+                        Data Protection Officer
+                    </div>
+                    <div class="highlight-text">
+                        We have appointed a Data Protection Officer (DPO) to oversee our GDPR compliance. 
+                        You can contact our DPO at <a href="mailto:dpo@retentionai.com">dpo@retentionai.com</a>.
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Data Transfers</h3>
+                <p class="content-text">
+                    When we transfer personal data outside the EU, we ensure appropriate safeguards are in place, 
+                    including Standard Contractual Clauses and adequacy decisions.
+                </p>
+
+                <h3 class="subsection-title">Breach Notification</h3>
+                <p class="content-text">
+                    In the event of a data breach that poses a risk to your rights and freedoms, we will notify 
+                    the relevant supervisory authority within 72 hours and inform affected individuals without undue delay.
+                </p>
+
+                <h3 class="subsection-title">Exercising Your Rights</h3>
+                <p class="content-text">
+                    To exercise any of your GDPR rights, please contact us using the information provided below. 
+                    We will respond to your request within one month.
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <h3 class="contact-title">Questions About Our Policies?</h3>
+            <p class="contact-text">
+                If you have any questions about these terms, privacy policy, or our data practices, 
+                please don't hesitate to contact us.
+            </p>
+            <div class="contact-links">
+                <a href="{% url 'contact' %}" class="contact-link">
+                    <i class="fas fa-envelope"></i>
+                    Contact Us
+                </a>
+                <a href="mailto:legal@retentionai.com" class="contact-link secondary">
+                    <i class="fas fa-gavel"></i>
+                    Legal Team
+                </a>
+                <a href="mailto:dpo@retentionai.com" class="contact-link secondary">
+                    <i class="fas fa-shield-alt"></i>
+                    Data Protection Officer
+                </a>
+            </div>
+        </div>
+    </main>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let termsBoxes = document.querySelectorAll(".terms-box");
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected content section
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab button
+            event.target.classList.add('active');
+            
+            // Update URL hash
+            window.location.hash = tabName;
+            
+            // Scroll to top of content
+            document.querySelector('.content-container').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
 
-            termsBoxes.forEach(box => {
-                box.addEventListener("click", function() {
-                    this.classList.toggle("active");
+        // Handle URL hash on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && ['terms', 'privacy', 'cookies', 'gdpr'].includes(hash)) {
+                showTab(hash);
+                // Update tab button
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.onclick.toString().includes(hash)) {
+                        btn.classList.add('active');
+                    }
                 });
+            }
+        });
+
+        // Smooth scrolling for table of contents links
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                    
+                    // Highlight the target section briefly
+                    targetElement.style.background = 'rgba(32, 178, 170, 0.1)';
+                    setTimeout(() => {
+                        targetElement.style.background = '';
+                    }, 2000);
+                }
             });
         });
+
+        // Add ripple effect to buttons
+        document.querySelectorAll('.tab-btn, .contact-link').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.3);
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Auto-hide messages after 5 seconds
+        setTimeout(() => {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(message => {
+                message.style.opacity = '0';
+                message.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    message.remove();
+                }, 300);
+            });
+        }, 5000);
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Print functionality
+        function printPage() {
+            window.print();
+        }
+
+        // Add keyboard navigation for tabs
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                const tabs = ['terms', 'privacy', 'cookies', 'gdpr'];
+                const currentTab = document.querySelector('.content-section.active').id;
+                const currentIndex = tabs.indexOf(currentTab);
+                
+                if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                    e.preventDefault();
+                    showTab(tabs[currentIndex - 1]);
+                    document.querySelector(`[onclick="showTab('${tabs[currentIndex - 1]}')"]`).classList.add('active');
+                } else if (e.key === 'ArrowRight' && currentIndex < tabs.length - 1) {
+                    e.preventDefault();
+                    showTab(tabs[currentIndex + 1]);
+                    document.querySelector(`[onclick="showTab('${tabs[currentIndex + 1]}')"]`).classList.add('active');
+                }
+            }
+        });
+
+        // Track section reading progress
+        const sections = document.querySelectorAll('.subsection-title');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    console.log(`Reading section: ${entry.target.textContent}`);
+                    // Here you could send analytics data
+                }
+            });
+        }, { threshold: 0.5 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Add reading time estimation
+        function estimateReadingTime() {
+            const text = document.querySelector('.content-section.active').textContent;
+            const wordsPerMinute = 200;
+            const words = text.trim().split(/\s+/).length;
+            const readingTime = Math.ceil(words / wordsPerMinute);
+            
+            // You could display this somewhere in the UI
+            console.log(`Estimated reading time: ${readingTime} minutes`);
+        }
+
+        // Call on tab change
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', estimateReadingTime);
+        });
+
+        // Initial call
+        estimateReadingTime();
     </script>
-{% endblock %}
+</body>
+</html>

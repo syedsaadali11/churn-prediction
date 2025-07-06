@@ -1,104 +1,1365 @@
-{% extends 'base.html' %}
-
-{% block title %}Services{% endblock %}
-
-{% block content %}
-    <div class="services-container">
-        <h1 class="services-heading">Our Services</h1>
-        <p class="services-subtext">We help businesses predict customer churn and take proactive actions.</p>
-
-        <div class="services-section">
-            <div class="service-box">
-                <i class="fas fa-chart-pie service-icon"></i>
-                <h2>Churn Prediction</h2>
-                <p>Utilize AI-driven models to predict customer churn before it happens.</p>
-            </div>
-
-            <div class="service-box">
-                <i class="fas fa-bullseye service-icon"></i>
-                <h2>Retention Strategies</h2>
-                <p>Get actionable insights to prevent churn and retain valuable customers.</p>
-            </div>
-
-            <div class="service-box">
-                <i class="fas fa-database service-icon"></i>
-                <h2>Data Analytics</h2>
-                <p>Leverage predictive analytics to understand customer behavior.</p>
-            </div>
-
-            <div class="service-box">
-                <i class="fas fa-robot service-icon"></i>
-                <h2>AI-Powered Insights</h2>
-                <p>Automate business decisions using cutting-edge machine learning technology.</p>
-            </div>
-        </div>
-    </div>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | RetentionAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <style>
-        .services-container {
-            text-align: center;
-            padding: 40px 5%;
+        :root {
+            --primary-sea-green: #20b2aa;
+            --primary-sea-green-dark: #1a9b94;
+            --primary-sea-green-light: #4dc4bd;
+            --secondary-teal: #17a2b8;
+            --accent-blue: #007bff;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #6c757d;
+            --text-dark: #2c3e50;
+            --text-light: #6c757d;
+            --success: #28a745;
+            --warning: #ffc107;
+            --error: #dc3545;
+            --shadow-light: rgba(32, 178, 170, 0.1);
+            --shadow-medium: rgba(32, 178, 170, 0.2);
+            --shadow-dark: rgba(0, 0, 0, 0.1);
         }
 
-        .services-heading {
-            font-size: 2.5rem;
-            background: linear-gradient(45deg, #00f7ff, #0066ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .services-subtext {
-            font-size: 1rem;
-            color: #ccc;
-            max-width: 600px;
-            margin: 0 auto;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
             line-height: 1.6;
         }
 
-        .services-section {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 30px;
+        /* Animated Background */
+        .services-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 15% 25%, rgba(32, 178, 170, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(32, 178, 170, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(32, 178, 170, 0.05) 0%, transparent 50%);
+            animation: servicesFloat 35s ease-in-out infinite;
         }
 
-        .service-box {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 15px;
-            border-radius: 10px;
+        @keyframes servicesFloat {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.05) rotate(90deg); }
+            50% { transform: scale(0.95) rotate(180deg); }
+            75% { transform: scale(1.02) rotate(270deg); }
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--white);
+            box-shadow: 0 2px 20px var(--shadow-dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--primary-sea-green);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-sea-green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '🌊';
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-sea-green);
+            background: var(--light-gray);
+        }
+
+        .nav-link.active {
+            color: var(--white);
+            background: var(--primary-sea-green);
+            box-shadow: 0 4px 15px var(--shadow-light);
+        }
+
+        .back-btn {
+            background: var(--light-gray);
+            border: 2px solid var(--medium-gray);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-sea-green);
+            color: var(--white);
+            border-color: var(--primary-sea-green);
+            transform: translateX(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
             text-align: center;
-            transition: 0.3s ease-in-out;
-            min-height: 160px;
+            margin-bottom: 4rem;
+            padding: 3rem 0;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px var(--shadow-dark);
         }
 
-        .service-box:hover {
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .hero-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-sea-green), var(--primary-sea-green-light));
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-stat {
+            text-align: center;
+            padding: 2rem;
+            background: var(--light-gray);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .hero-stat:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+            border-color: var(--primary-sea-green);
+            box-shadow: 0 15px 35px var(--shadow-light);
         }
 
-        .service-box h2 {
-            color: #ffffff;
-            font-size: 1.2rem;
-            margin-bottom: 8px;
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--primary-sea-green);
         }
 
-        .service-box p {
-            color: #cccccc;
-            font-size: 0.9rem;
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Services Grid */
+        .services-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 25px var(--shadow-dark);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-sea-green), var(--primary-sea-green-light));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-sea-green);
+            box-shadow: 0 25px 50px var(--shadow-light);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
         }
 
         .service-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 2rem;
-            color: #00f7ff;
-            margin-bottom: 10px;
+            color: var(--white);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            animation: iconGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes iconGlow {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .service-icon.prediction {
+            background: linear-gradient(135deg, var(--primary-sea-green), var(--primary-sea-green-dark));
+        }
+
+        .service-icon.analytics {
+            background: linear-gradient(135deg, var(--secondary-teal), var(--primary-sea-green));
+        }
+
+        .service-icon.automation {
+            background: linear-gradient(135deg, var(--accent-blue), var(--primary-sea-green));
+        }
+
+        .service-icon.integration {
+            background: linear-gradient(135deg, var(--success), var(--primary-sea-green));
+        }
+
+        .service-icon.consulting {
+            background: linear-gradient(135deg, var(--warning), var(--primary-sea-green));
+        }
+
+        .service-icon.support {
+            background: linear-gradient(135deg, var(--error), var(--primary-sea-green));
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .service-desc {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .service-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            width: 20px;
+            height: 20px;
+            background: var(--primary-sea-green);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .service-price {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-amount {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-sea-green);
+        }
+
+        .price-period {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .service-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-sea-green), var(--primary-sea-green-dark));
+            border: none;
+            border-radius: 12px;
+            color: var(--white);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .service-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--shadow-medium);
+        }
+
+        .service-btn.secondary {
+            background: var(--light-gray);
+            border: 2px solid var(--medium-gray);
+            color: var(--text-dark);
+        }
+
+        .service-btn.secondary:hover {
+            background: var(--primary-sea-green);
+            color: var(--white);
+            border-color: var(--primary-sea-green);
+        }
+
+        /* Premium Badge */
+        .premium-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, var(--primary-sea-green), var(--primary-sea-green-light));
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px var(--shadow-light);
+        }
+
+        /* Process Section */
+        .process-section {
+            margin-bottom: 4rem;
+            text-align: center;
+            background: var(--white);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px var(--shadow-dark);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            position: relative;
+            padding: 2rem;
+            background: var(--light-gray);
+            border: 2px solid var(--medium-gray);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-sea-green);
+            box-shadow: 0 15px 35px var(--shadow-light);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--primary-sea-green), var(--primary-sea-green-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--white);
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px var(--shadow-light);
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-sea-green), var(--primary-sea-green-light));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 8px 25px var(--shadow-light);
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .step-desc {
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-sea-green), var(--primary-sea-green-dark));
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 50px var(--shadow-medium);
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            z-index: 1;
+        }
+
+        .cta-section > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .cta-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 1.25rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .cta-btn.primary {
+            background: var(--white);
+            color: var(--primary-sea-green);
+        }
+
+        .cta-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+
+        .cta-btn.secondary:hover {
+            background: var(--white);
+            color: var(--primary-sea-green);
+            transform: translateY(-3px);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin-bottom: 4rem;
+            background: var(--white);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px var(--shadow-dark);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--light-gray);
+            border: 2px solid var(--medium-gray);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary-sea-green);
+        }
+
+        .faq-item.active {
+            border-color: var(--primary-sea-green);
+            box-shadow: 0 5px 20px var(--shadow-light);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-sea-green);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+            color: var(--primary-sea-green);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Messages */
+        .messages {
+            margin-bottom: 2rem;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--white);
+            border: 2px solid var(--success);
+            color: var(--success);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.1);
+        }
+
+        .message.success {
+            background: rgba(40, 167, 69, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                gap: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
         }
 
         @media (max-width: 768px) {
-            .services-section {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .nav-container {
+                padding: 0 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .services-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-section,
+            .process-section,
+            .faq-section {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-title {
+                font-size: 2rem;
+            }
+
+            .service-card {
+                padding: 2rem 1.5rem;
             }
         }
     </style>
-{% endblock %}
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="services-bg"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="logo">RetentionAI</a>
+            
+            <ul class="nav-menu">
+                <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+                <li><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>
+                <li><a href="{% url 'predict' %}" class="nav-link">Predict</a></li>
+                <li><a href="{% url 'batch_predict' %}" class="nav-link">Batch</a></li>
+                <li><a href="{% url 'services' %}" class="nav-link active">Services</a></li>
+            </ul>
+            
+            <a href="{% url 'home' %}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Django Messages -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                <i class="fas fa-check-circle"></i>
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">Advanced Analytics Services</h1>
+            <p class="hero-subtitle">
+                Unlock the full potential of your customer data with our comprehensive suite of AI-powered 
+                analytics services designed to maximize retention and drive business growth.
+            </p>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="stat-number">95.2%</div>
+                    <div class="stat-label">Prediction Accuracy</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-number">10M+</div>
+                    <div class="stat-label">Predictions Made</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Enterprise Clients</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support Available</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services-section">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">
+                Choose from our comprehensive range of AI-powered customer retention solutions
+            </p>
+            
+            <div class="services-grid">
+                <!-- Churn Prediction Service -->
+                <div class="service-card">
+                    <div class="service-icon prediction">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="service-title">AI Churn Prediction</h3>
+                    <p class="service-desc">
+                        Advanced machine learning models that predict customer churn with industry-leading accuracy. 
+                        Get real-time insights and actionable recommendations.
+                    </p>
+                    <ul class="service-features">
+                        <li>Real-time prediction engine</li>
+                        <li>95%+ accuracy guarantee</li>
+                        <li>Custom model training</li>
+                        <li>API integration support</li>
+                        <li>Detailed risk analysis</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price-amount">$49</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <a href="{% url 'predict' %}" class="service-btn">
+                        <i class="fas fa-rocket"></i>
+                        Start Predicting
+                    </a>
+                </div>
+
+                <!-- Advanced Analytics -->
+                <div class="service-card">
+                    <div class="premium-badge">Most Popular</div>
+                    <div class="service-icon analytics">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="service-title">Advanced Analytics</h3>
+                    <p class="service-desc">
+                        Comprehensive analytics dashboard with deep insights, trend analysis, and 
+                        predictive modeling for strategic decision making.
+                    </p>
+                    <ul class="service-features">
+                        <li>Interactive dashboards</li>
+                        <li>Trend analysis & forecasting</li>
+                        <li>Custom report generation</li>
+                        <li>Data visualization tools</li>
+                        <li>Export capabilities</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price-amount">$99</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <a href="{% url 'dashboard' %}" class="service-btn">
+                        <i class="fas fa-chart-bar"></i>
+                        View Analytics
+                    </a>
+                </div>
+
+                <!-- Automation Suite -->
+                <div class="service-card">
+                    <div class="service-icon automation">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="service-title">Automation Suite</h3>
+                    <p class="service-desc">
+                        Automated workflows and alerts to proactively engage at-risk customers 
+                        and implement retention strategies without manual intervention.
+                    </p>
+                    <ul class="service-features">
+                        <li>Automated alert system</li>
+                        <li>Custom workflow builder</li>
+                        <li>Email campaign integration</li>
+                        <li>CRM synchronization</li>
+                        <li>Performance tracking</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price-amount">$149</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <a href="#" class="service-btn secondary">
+                        <i class="fas fa-magic"></i>
+                        Learn More
+                    </a>
+                </div>
+
+                <!-- Enterprise Integration -->
+                <div class="service-card">
+                    <div class="service-icon integration">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3 class="service-title">Enterprise Integration</h3>
+                    <p class="service-desc">
+                        Seamless integration with your existing systems including CRM, ERP, 
+                        and marketing platforms for unified customer intelligence.
+                    </p>
+                    <ul class="service-features">
+                        <li>API-first architecture</li>
+                        <li>Multi-platform support</li>
+                        <li>Real-time data sync</li>
+                        <li>Custom connectors</li>
+                        <li>Enterprise security</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price-amount">$299</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <a href="#" class="service-btn secondary">
+                        <i class="fas fa-link"></i>
+                        Contact Sales
+                    </a>
+                </div>
+
+                <!-- Consulting Services -->
+                <div class="service-card">
+                    <div class="service-icon consulting">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3 class="service-title">Expert Consulting</h3>
+                    <p class="service-desc">
+                        Work with our data scientists and retention experts to develop custom 
+                        strategies and optimize your customer retention programs.
+                    </p>
+                    <ul class="service-features">
+                        <li>Dedicated data scientists</li>
+                        <li>Custom strategy development</li>
+                        <li>Performance optimization</li>
+                        <li>Training & workshops</li>
+                        <li>Ongoing support</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price-amount">$199</span>
+                        <span class="price-period">/hour</span>
+                    </div>
+                    <a href="#" class="service-btn secondary">
+                        <i class="fas fa-calendar"></i>
+                        Book Consultation
+                    </a>
+                </div>
+
+                <!-- Premium Support -->
+                <div class="service-card">
+                    <div class="service-icon support">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="service-title">Premium Support</h3>
+                    <p class="service-desc">
+                        24/7 priority support with dedicated account management, faster response times, 
+                        and direct access to our technical team.
+                    </p>
+                    <ul class="service-features">
+                        <li>24/7 priority support</li>
+                        <li>Dedicated account manager</li>
+                        <li>Phone & video support</li>
+                        <li>Custom training sessions</li>
+                        <li>SLA guarantees</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price-amount">$79</span>
+                        <span class="price-period">/month</span>
+                    </div>
+                    <a href="#" class="service-btn secondary">
+                        <i class="fas fa-phone"></i>
+                        Get Support
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="process-section">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">
+                Get started with RetentionAI in just a few simple steps
+            </p>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <h3 class="step-title">Upload Your Data</h3>
+                    <p class="step-desc">
+                        Securely upload your customer data through our intuitive interface or API integration.
+                    </p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="step-title">AI Analysis</h3>
+                    <p class="step-desc">
+                        Our advanced AI models analyze your data and generate accurate churn predictions.
+                    </p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="step-title">Get Insights</h3>
+                    <p class="step-desc">
+                        Receive detailed insights, risk scores, and actionable recommendations for each customer.
+                    </p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="step-title">Take Action</h3>
+                    <p class="step-desc">
+                        Implement targeted retention strategies and monitor results through our dashboard.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2 class="cta-title">Ready to Reduce Customer Churn?</h2>
+            <p class="cta-subtitle">
+                Join thousands of businesses using RetentionAI to predict, prevent, and reduce customer churn. 
+                Start your free trial today and see the difference AI can make.
+            </p>
+            <div class="cta-buttons">
+                <a href="{% url 'predict' %}" class="cta-btn primary">
+                    <i class="fas fa-rocket"></i>
+                    Start Free Trial
+                </a>
+                <a href="#" class="cta-btn secondary">
+                    <i class="fas fa-calendar"></i>
+                    Schedule Demo
+                </a>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How accurate are your churn predictions?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Our AI models achieve 95%+ accuracy across various industries. We continuously train and optimize our models using the latest machine learning techniques and your specific data patterns to ensure the highest possible accuracy for your business.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What data do I need to get started?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            You'll need basic customer information including demographics, service usage, billing history, and interaction data. Our platform can work with various data formats and we provide guidance on data preparation to ensure optimal results.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How long does it take to see results?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            You can start getting predictions immediately after uploading your data. For batch processing, results are typically available within minutes. Custom model training may take 24-48 hours depending on data complexity.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Is my data secure?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Absolutely. We use enterprise-grade security with end-to-end encryption, SOC 2 compliance, and GDPR compliance. Your data is processed securely and never shared with third parties. We also offer on-premise deployment options for maximum security.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I integrate with my existing systems?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! We offer comprehensive API integration and pre-built connectors for popular CRM, ERP, and marketing platforms. Our team can also develop custom integrations to fit your specific technology stack.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What support options are available?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We offer multiple support tiers including email support, live chat, phone support, and premium 24/7 support with dedicated account management. All plans include comprehensive documentation and video tutorials.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // FAQ Toggle functionality
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        // Counter animation for hero stats
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                
+                // Format numbers appropriately
+                let displayValue = Math.floor(current);
+                if (target >= 1000000) {
+                    displayValue = (Math.floor(current / 100000) / 10) + 'M+';
+                } else if (target >= 1000) {
+                    displayValue = Math.floor(current / 1000) + 'K+';
+                } else if (target < 100) {
+                    displayValue = current.toFixed(1) + '%';
+                } else {
+                    displayValue = Math.floor(current) + '+';
+                }
+                
+                element.textContent = displayValue;
+            }, 20);
+        }
+
+        // Initialize counter animations when stats come into view
+        document.addEventListener('DOMContentLoaded', function() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            const targets = [95.2, 10000000, 500, 24]; // Corresponding to the stats
+            
+            // Intersection Observer for counter animation
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target, targets[index]);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+
+            statNumbers.forEach(num => {
+                observer.observe(num);
+            });
+        });
+
+        // Service card hover effects
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Process step animations
+        document.querySelectorAll('.process-step').forEach((step, index) => {
+            step.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+                const icon = this.querySelector('.step-icon');
+                icon.style.transform = 'scale(1.1) rotate(5deg)';
+            });
+            
+            step.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                const icon = this.querySelector('.step-icon');
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            });
+        });
+
+        // Add ripple effect to buttons
+        document.querySelectorAll('.service-btn, .cta-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.3);
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Auto-hide messages after 5 seconds
+        setTimeout(() => {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(message => {
+                message.style.opacity = '0';
+                message.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    message.remove();
+                }, 300);
+            });
+        }, 5000);
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Parallax effect for background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const bg = document.querySelector('.services-bg');
+            bg.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+
+        // Service card click tracking
+        document.querySelectorAll('.service-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const serviceName = this.closest('.service-card').querySelector('.service-title').textContent;
+                console.log(`Service clicked: ${serviceName}`);
+                // Here you could send analytics data
+            });
+        });
+
+        // FAQ analytics
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const faqText = this.querySelector('span').textContent;
+                console.log(`FAQ opened: ${faqText}`);
+                // Here you could send analytics data
+            });
+        });
+    </script>
+</body>
+</html>

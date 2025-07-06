@@ -1,126 +1,1636 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Prediction | RetentionAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --sea-green: #20b2aa;
+            --sea-green-light: #48d1cc;
+            --sea-green-dark: #008b8b;
+            --white: #ffffff;
+            --light-grey: #f8f9fa;
+            --medium-grey: #e9ecef;
+            --dark-grey: #6c757d;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --glass-hover: rgba(255, 255, 255, 0.98);
+            --glass-border: rgba(32, 178, 170, 0.2);
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-heavy: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
 
-{% block title %}Admin Dashboard{% endblock %}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-{% block content %}
-    <div class="dashboard-container">
-        <h1 class="dashboard-heading">Admin Dashboard</h1>
-        <p class="dashboard-subtext">Manage users and analyze churn predictions efficiently.</p>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 50%, #ccfbf1 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+        }
 
-        <div class="dashboard-section">
-            <div class="dashboard-box">
-                <i class="fas fa-users dashboard-icon"></i>
-                <h2>Total Users</h2>
-                <p>1,250 Active Users</p>
+        /* Animated Background */
+        .batch-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 25% 25%, rgba(32, 178, 170, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(72, 209, 204, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.08) 0%, transparent 50%);
+            animation: batchFloat 22s ease-in-out infinite;
+        }
+
+        @keyframes batchFloat {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            33% { transform: scale(1.1) rotate(120deg); }
+            66% { transform: scale(0.9) rotate(240deg); }
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--white);
+            border-bottom: 2px solid var(--glass-border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-light);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--sea-green), var(--sea-green-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--sea-green);
+        }
+
+        .back-btn {
+            background: var(--light-grey);
+            border: 2px solid var(--medium-grey);
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: rgba(32, 178, 170, 0.1);
+            border-color: var(--sea-green);
+            transform: translateX(-2px);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            background: var(--white);
+            border: 2px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .breadcrumb-list {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .breadcrumb-item {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-item a {
+            color: var(--sea-green);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--sea-green-dark);
+        }
+
+        .breadcrumb-item.active {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-muted);
+            margin: 0 0.5rem;
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: var(--white);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--glass-border);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background: var(--light-grey);
+        }
+
+        .upload-area:hover {
+            border-color: var(--sea-green);
+            background: rgba(32, 178, 170, 0.05);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--sea-green-light);
+            background: rgba(72, 209, 204, 0.05);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: var(--sea-green);
+            margin-bottom: 1rem;
+            animation: uploadBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes uploadBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .upload-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .upload-subtext {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, var(--sea-green), var(--sea-green-light));
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-right: 1rem;
+            box-shadow: 0 4px 16px rgba(32, 178, 170, 0.3);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(32, 178, 170, 0.4);
+        }
+
+        .sample-btn {
+            background: var(--light-grey);
+            border: 2px solid var(--medium-grey);
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .sample-btn:hover {
+            background: rgba(32, 178, 170, 0.1);
+            border-color: var(--sea-green);
+            transform: translateY(-2px);
+        }
+
+        /* Sample CSV Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 90%;
+            max-height: 80%;
+            overflow: auto;
+            box-shadow: var(--shadow-heavy);
+            position: relative;
+            border: 2px solid var(--glass-border);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--glass-border);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-title i {
+            color: var(--sea-green);
+        }
+
+        .close-btn {
+            background: var(--error);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+
+        .sample-table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 2px solid var(--glass-border);
+            margin-bottom: 1rem;
+        }
+
+        .sample-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            font-size: 0.9rem;
+        }
+
+        .sample-table th {
+            background: var(--sea-green);
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--sea-green-dark);
+            white-space: nowrap;
+        }
+
+        .sample-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--medium-grey);
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        .sample-table tr:nth-child(even) {
+            background: var(--light-grey);
+        }
+
+        .sample-table tr:hover {
+            background: rgba(32, 178, 170, 0.05);
+        }
+
+        .sample-info {
+            background: rgba(32, 178, 170, 0.1);
+            border: 2px solid var(--sea-green);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .sample-info h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sample-info p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* File Info */
+        .file-info {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--success);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--success);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: var(--shadow-light);
+        }
+
+        .file-details {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .file-size {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .file-status {
+            color: var(--success);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remove-file {
+            background: var(--error);
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-file:hover {
+            background: #dc2626;
+        }
+
+        /* Process Button */
+        .process-section {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .process-btn {
+            background: linear-gradient(135deg, var(--sea-green), var(--sea-green-light));
+            border: none;
+            border-radius: 12px;
+            padding: 1.25rem 3rem;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(32, 178, 170, 0.3);
+        }
+
+        .process-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(32, 178, 170, 0.4);
+        }
+
+        .process-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            background: var(--medium-grey);
+            box-shadow: none;
+        }
+
+        .process-btn.loading {
+            pointer-events: none;
+        }
+
+        .process-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success Message */
+        .upload-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--success);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin-top: 1rem;
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--success);
+            font-weight: 600;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        /* Results Section */
+        .results-section {
+            background: var(--white);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .results-title i {
+            color: var(--sea-green);
+        }
+
+        /* Results Table */
+        .results-table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 2px solid var(--glass-border);
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+        }
+
+        .results-table th {
+            background: var(--light-grey);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--medium-grey);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .results-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--medium-grey);
+            color: var(--text-primary);
+        }
+
+        .results-table tr:hover {
+            background: rgba(32, 178, 170, 0.05);
+        }
+
+        .churn-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .churn-badge.likely {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: 2px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .churn-badge.unlikely {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 2px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .probability-bar {
+            width: 100px;
+            height: 8px;
+            background: var(--medium-grey);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .probability-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+
+        .probability-fill.high {
+            background: linear-gradient(90deg, var(--error), #dc2626);
+        }
+
+        .probability-fill.medium {
+            background: linear-gradient(90deg, var(--warning), #d97706);
+        }
+
+        .probability-fill.low {
+            background: linear-gradient(90deg, var(--success), #16a34a);
+        }
+
+        /* Summary Stats */
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--light-grey);
+            border: 2px solid var(--medium-grey);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--sea-green);
+            background: rgba(32, 178, 170, 0.05);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-number.total {
+            color: var(--sea-green);
+        }
+
+        .stat-number.high-risk {
+            color: var(--error);
+        }
+
+        .stat-number.low-risk {
+            color: var(--success);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--sea-green);
+        }
+
+        .empty-state h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Messages */
+        .messages {
+            margin-bottom: 2rem;
+        }
+
+        .message {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.2);
+            color: var(--error);
+        }
+
+        .message.success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--medium-grey);
+            border-top: 4px solid var(--sea-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Progress indicator */
+        .progress-indicator {
+            background: var(--light-grey);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--medium-grey);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--sea-green), var(--sea-green-light));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .upload-area {
+                padding: 2rem 1rem;
+            }
+            
+            .upload-icon {
+                font-size: 3rem;
+            }
+            
+            .results-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .summary-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .breadcrumb {
+                padding: 0.75rem 1rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .modal-content {
+                max-width: 95%;
+                padding: 1.5rem;
+            }
+
+            .sample-table {
+                font-size: 0.8rem;
+            }
+
+            .sample-table th,
+            .sample-table td {
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .upload-btn, .sample-btn {
+                display: block;
+                margin: 0.5rem 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .upload-section, .results-section {
+                padding: 1.5rem;
+            }
+
+            .modal-content {
+                padding: 1rem;
+            }
+        }
+
+        /* Expandable rows for reasons and suggestions */
+        .expandable-row {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .expandable-row:hover {
+            background: rgba(32, 178, 170, 0.1);
+        }
+
+        .details-row {
+            display: none;
+            background: var(--light-grey);
+        }
+
+        .details-content {
+            padding: 1rem;
+            border-left: 4px solid var(--sea-green);
+        }
+
+        .reasons-list, .suggestions-list {
+            list-style: none;
+            margin: 0.5rem 0;
+        }
+
+        .reasons-list li, .suggestions-list li {
+            padding: 0.25rem 0;
+            color: var(--text-secondary);
+        }
+
+        .reasons-list li::before {
+            content: "⚠️";
+            margin-right: 0.5rem;
+        }
+
+        .suggestions-list li::before {
+            content: "💡";
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="batch-bg"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Sample CSV Modal -->
+    <div class="modal-overlay" id="sampleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+    <i class="fas fa-table"></i>
+    View Sample Format
+</h3>
+
+                <button class="close-btn" onclick="closeSampleModal()">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <div class="dashboard-box">
-                <i class="fas fa-chart-bar dashboard-icon"></i>
-                <h2>Predictions Today</h2>
-                <p>245 Churn Predictions</p>
+            
+            <div class="sample-info">
+                <h4>
+                    <i class="fas fa-info-circle"></i>
+                    Required Format
+                </h4>
+                <p>This is the required column format for uploading your customer data. Please ensure the following fields are present: <strong>tenure</strong>, <strong>MonthlyCharges</strong>, and <strong>TotalCharges</strong>.</p>
             </div>
-            <div class="dashboard-box">
-                <i class="fas fa-user-shield dashboard-icon"></i>
-                <h2>Admin Tools</h2>
-                <p>Manage roles & permissions</p>
-            </div>
-        </div>
 
-        <div class="dashboard-actions">
-            <button class="action-btn">View Reports</button>
-            <button class="action-btn">Manage Users</button>
-            <button class="action-btn">Export Data</button>
+            <div class="sample-table-container">
+                <table class="sample-table">
+                    <thead>
+                        <tr>
+                            <th>gender</th>
+                            <th>SeniorCitizen</th>
+                            <th>Partner</th>
+                            <th>Dependents</th>
+                            <th>tenure</th>
+                            <th>PhoneService</th>
+                            <th>MultipleLines</th>
+                            <th>InternetService</th>
+                            <th>OnlineSecurity</th>
+                            <th>OnlineBackup</th>
+                            <th>DeviceProtection</th>
+                            <th>TechSupport</th>
+                            <th>StreamingTV</th>
+                            <th>StreamingMovies</th>
+                            <th>Contract</th>
+                            <th>PaperlessBilling</th>
+                            <th>PaymentMethod</th>
+                            <th>MonthlyCharges</th>
+                            <th>TotalCharges</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Female</td>
+                            <td>0</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>12</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>Fiber optic</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>Month-to-month</td>
+                            <td>Yes</td>
+                            <td>Electronic check</td>
+                            <td>70.35</td>
+                            <td>845.5</td>
+                        </tr>
+                        <tr>
+                            <td>Male</td>
+                            <td>1</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>3</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>DSL</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>One year</td>
+                            <td>No</td>
+                            <td>Mailed check</td>
+                            <td>55.1</td>
+                            <td>165.3</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="sample-info">
+                <h4>
+                    <i class="fas fa-lightbulb"></i>
+                    Tips for Best Results
+                </h4>
+                <p>
+                    • Ensure all required fields (tenure, MonthlyCharges, TotalCharges) are present<br>
+                    • Use consistent formatting for categorical values (Yes/No, Male/Female)<br>
+                    • Numeric values should not contain currency symbols or commas<br>
+                    • Keep column names exactly as shown in the sample
+                </p>
+            </div>
         </div>
     </div>
 
-    <style>
-        .dashboard-container {
-            text-align: center;
-            padding: 60px 10%;
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="logo">RetentionAI</a>
+            
+            <ul class="nav-menu">
+                <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+                <li><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>
+                <li><a href="{% url 'predict' %}" class="nav-link">Predict</a></li>
+                <li><a href="{% url 'services' %}" class="nav-link">Services</a></li>
+                <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <a href="{% url 'dashboard' %}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Breadcrumb Navigation -->
+        <div class="breadcrumb">
+            <ul class="breadcrumb-list">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-separator">
+                    <i class="fas fa-chevron-right"></i>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'dashboard' %}">Dashboard</a>
+                </li>
+                <li class="breadcrumb-separator">
+                    <i class="fas fa-chevron-right"></i>
+                </li>
+                <li class="breadcrumb-item active">Batch Prediction</li>
+            </ul>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Batch Prediction Analysis</h1>
+            <p class="page-subtitle">
+                Upload your customer data CSV file to analyze churn risk for multiple customers simultaneously using our advanced AI model
+            </p>
+        </div>
+
+        <!-- Django Messages -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                <i class="fas fa-{% if message.tags == 'error' %}exclamation-triangle{% else %}check-circle{% endif %}"></i>
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">Drag & Drop your CSV file here</div>
+                <div class="upload-subtext">or click to browse files (Required fields: tenure, MonthlyCharges, TotalCharges)</div>
+                
+                <div style="margin-top: 2rem;">
+                    <button type="button" class="upload-btn" onclick="document.getElementById('csvFile').click()">
+                        <i class="fas fa-upload"></i>
+                        Choose File
+                    </button>
+                    <button type="button" class="sample-btn" onclick="showSampleModal()">
+    <i class="fas fa-eye"></i>
+    Show Sample Format
+</button>
+
+                </div>
+                
+                <input type="file" id="csvFile" name="csv_file" class="file-input" accept=".csv">
+            </div>
+            
+            <!-- File Upload Success Message -->
+            <div class="upload-success" id="uploadSuccess">
+                <i class="fas fa-check-circle"></i>
+                <span>CSV file uploaded successfully! Ready for processing.</span>
+            </div>
+            
+            <div class="file-info" id="fileInfo">
+                <div class="file-icon">
+                    <i class="fas fa-file-csv"></i>
+                </div>
+                <div class="file-details">
+                    <div class="file-name" id="fileName"></div>
+                    <div class="file-size" id="fileSize"></div>
+                    <div class="file-status">
+                        <i class="fas fa-check-circle"></i>
+                        Ready for processing
+                    </div>
+                </div>
+                <button type="button" class="remove-file" onclick="removeFile()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="progress-indicator" id="progressIndicator">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Processing your data...</div>
+            </div>
+            
+            <div class="process-section">
+                <form method="post" enctype="multipart/form-data" id="uploadForm" style="display: none;">
+                    {% csrf_token %}
+                    <input type="file" name="csv_file" id="hiddenFileInput">
+                </form>
+                
+                <button type="button" class="process-btn" id="processBtn" disabled onclick="processFile()">
+                    <i class="fas fa-brain"></i>
+                    <span>Process Batch Analysis</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        {% if csv_results %}
+        <div class="results-section">
+            <div class="results-header">
+                <h2 class="results-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Analysis Results
+                </h2>
+            </div>
+
+            <!-- Summary Statistics -->
+            <div class="summary-stats">
+                <div class="stat-card">
+                    <div class="stat-number total">{{ csv_results|length }}</div>
+                    <div class="stat-label">Total Customers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number high-risk" id="highRiskCount">0</div>
+                    <div class="stat-label">High Risk (>70%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="color: var(--warning);" id="mediumRiskCount">0</div>
+                    <div class="stat-label">Medium Risk (40-70%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number low-risk" id="lowRiskCount">0</div>
+                    <div class="stat-label">Low Risk (<40%)</div>
+                </div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="results-table-container">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Tenure</th>
+                            <th>Monthly Charges</th>
+                            <th>Total Charges</th>
+                            <th>Churn Probability</th>
+                            <th>Risk Level</th>
+                            <th>Decision</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in csv_results %}
+                        <tr class="expandable-row" onclick="toggleDetails({{ forloop.counter }})">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ result.tenure|default:"N/A" }}</td>
+                            <td>${{ result.MonthlyCharges|floatformat:2|default:"N/A" }}</td>
+                            <td>${{ result.TotalCharges|floatformat:2|default:"N/A" }}</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div class="probability-bar">
+                                        <div class="probability-fill {% if result.Churn_Probability > 70 %}high{% elif result.Churn_Probability > 40 %}medium{% else %}low{% endif %}" style="width: {{ result.Churn_Probability }}%"></div>
+                                    </div>
+                                    <span>{{ result.Churn_Probability }}%</span>
+                                </div>
+                            </td>
+                            <td>
+                                {% if result.Churn_Probability > 70 %}
+                                    <span style="color: var(--error); font-weight: 600;">High Risk</span>
+                                {% elif result.Churn_Probability > 40 %}
+                                    <span style="color: var(--warning); font-weight: 600;">Medium Risk</span>
+                                {% else %}
+                                    <span style="color: var(--success); font-weight: 600;">Low Risk</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="churn-badge {% if result.Churn_Decision == 'Likely to Churn' %}likely{% else %}unlikely{% endif %}">
+                                    {{ result.Churn_Decision }}
+                                </span>
+                            </td>
+                            <td>
+                                <i class="fas fa-chevron-down" style="color: var(--sea-green);"></i>
+                            </td>
+                        </tr>
+                        <tr class="details-row" id="details-{{ forloop.counter }}">
+                            <td colspan="8">
+                                <div class="details-content">
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                        <div>
+                                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">
+                                                <i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i>
+                                                Churn Risk Factors
+                                            </h4>
+                                            <ul class="reasons-list">
+                                                {% for reason in result.reasons %}
+                                                <li>{{ reason }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">
+                                                <i class="fas fa-lightbulb" style="color: var(--sea-green);"></i>
+                                                Retention Suggestions
+                                            </h4>
+                                            <ul class="suggestions-list">
+                                                {% for suggestion in result.suggestions %}
+                                                <li>{{ suggestion }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+        <div class="results-section">
+            <div class="empty-state">
+                <i class="fas fa-chart-line"></i>
+                <h3>No Results Yet</h3>
+                <p>Upload a CSV file and click "Process Batch Analysis" to see results here</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // File upload handling
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('csvFile');
+        const hiddenFileInput = document.getElementById('hiddenFileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const uploadSuccess = document.getElementById('uploadSuccess');
+        const processBtn = document.getElementById('processBtn');
+        const progressIndicator = document.getElementById('progressIndicator');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const uploadForm = document.getElementById('uploadForm');
+        const sampleModal = document.getElementById('sampleModal');
+
+        let selectedFile = null;
+
+        // Sample Modal Functions
+        function showSampleModal() {
+            sampleModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         }
 
-        .dashboard-heading {
-            font-size: 3rem;
-            background: linear-gradient(45deg, #00f7ff, #0066ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+        function closeSampleModal() {
+            sampleModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
 
-        .dashboard-subtext {
-            font-size: 1.2rem;
-            color: #ccc;
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        .dashboard-section {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .dashboard-box {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            padding: 25px;
-            border-radius: 12px;
-            width: 30%;
-            text-align: center;
-            transition: 0.3s ease-in-out;
-        }
-
-        .dashboard-box:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.2);
-        }
-
-        .dashboard-box h2 {
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
-        .dashboard-box p {
-            color: #cccccc;
-            font-size: 1rem;
-        }
-
-        .dashboard-icon {
-            font-size: 2.5rem;
-            color: #00f7ff;
-            margin-bottom: 15px;
-        }
-
-        .dashboard-actions {
-            margin-top: 40px;
-        }
-
-        .action-btn {
-            padding: 12px 24px;
-            background: linear-gradient(45deg, #0066ff, #00f7ff);
-            border: none;
-            border-radius: 30px;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            margin: 10px;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
-        }
-
-        @media (max-width: 900px) {
-            .dashboard-section {
-                flex-direction: column;
-                align-items: center;
+        // Close modal when clicking outside
+        sampleModal.addEventListener('click', function(e) {
+            if (e.target === sampleModal) {
+                closeSampleModal();
             }
-            .dashboard-box {
-                width: 80%;
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && sampleModal.style.display === 'flex') {
+                closeSampleModal();
+            }
+        });
+
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && (files[0].type === 'text/csv' || files[0].name.endsWith('.csv'))) {
+                handleFileSelect(files[0]);
+            } else {
+                alert('Please select a valid CSV file');
+            }
+        });
+
+        // Click to upload
+        uploadArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        // File input change
+        fileInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        // Handle file selection
+        function handleFileSelect(file) {
+            if (!validateFile(file)) {
+                return;
+            }
+
+            selectedFile = file;
+            
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = formatFileSize(file.size);
+            
+            // Show success message and file info
+            uploadSuccess.style.display = 'flex';
+            fileInfo.style.display = 'flex';
+            
+            // Enable process button
+            processBtn.disabled = false;
+            processBtn.style.background = 'linear-gradient(135deg, var(--sea-green), var(--sea-green-light))';
+            processBtn.style.boxShadow = '0 4px 16px rgba(32, 178, 170, 0.3)';
+
+            // Add success animation
+            fileInfo.style.animation = 'slideIn 0.5s ease-out';
+            uploadSuccess.style.animation = 'slideIn 0.5s ease-out';
+        }
+
+        // File validation
+        function validateFile(file) {
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            
+            if (file.size > maxSize) {
+                alert('File size must be less than 10MB');
+                return false;
+            }
+            
+            if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
+                alert('Please select a valid CSV file');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Remove file
+        function removeFile() {
+            selectedFile = null;
+            fileInput.value = '';
+            hiddenFileInput.value = '';
+            fileInfo.style.display = 'none';
+            uploadSuccess.style.display = 'none';
+            processBtn.disabled = true;
+            processBtn.style.background = 'var(--medium-grey)';
+            processBtn.style.boxShadow = 'none';
+        }
+
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Process file function
+        function processFile() {
+            if (!selectedFile) {
+                alert('Please select a CSV file first');
+                return;
+            }
+
+            const submitBtn = document.getElementById('processBtn');
+            const btnText = submitBtn.querySelector('span');
+            
+            // Set up the hidden form with the selected file
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(selectedFile);
+            hiddenFileInput.files = dataTransfer.files;
+            
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+            btnText.textContent = 'Processing...';
+            
+            // Show progress indicator
+            progressIndicator.style.display = 'block';
+            loadingOverlay.style.display = 'flex';
+            
+            // Simulate progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 90) progress = 90;
+                progressFill.style.width = progress + '%';
+                progressText.textContent = `Processing your data... ${Math.floor(progress)}%`;
+            }, 500);
+            
+            // Submit the form
+            setTimeout(() => {
+                clearInterval(progressInterval);
+                progressFill.style.width = '100%';
+                progressText.textContent = 'Processing complete! Redirecting...';
+                
+                setTimeout(() => {
+                    uploadForm.submit();
+                }, 500);
+            }, 2000);
+        }
+
+        // Calculate summary statistics
+        {% if csv_results %}
+        document.addEventListener('DOMContentLoaded', function() {
+            let highRisk = 0, mediumRisk = 0, lowRisk = 0;
+            
+            {% for result in csv_results %}
+            const prob = {{ result.Churn_Probability }};
+            if (prob > 70) highRisk++;
+            else if (prob > 40) mediumRisk++;
+            else lowRisk++;
+            {% endfor %}
+            
+            // Animate counters
+            animateCounter(document.getElementById('highRiskCount'), highRisk);
+            animateCounter(document.getElementById('mediumRiskCount'), mediumRisk);
+            animateCounter(document.getElementById('lowRiskCount'), lowRisk);
+            
+            // Animate probability bars
+            setTimeout(() => {
+                document.querySelectorAll('.probability-fill').forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }, 500);
+        });
+        {% endif %}
+
+        // Counter animation
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current);
+            }, 30);
+        }
+
+        // Toggle details row
+        function toggleDetails(rowId) {
+            const detailsRow = document.getElementById(`details-${rowId}`);
+            const chevron = event.currentTarget.querySelector('.fa-chevron-down');
+            
+            if (detailsRow.style.display === 'table-row') {
+                detailsRow.style.display = 'none';
+                chevron.style.transform = 'rotate(0deg)';
+            } else {
+                detailsRow.style.display = 'table-row';
+                chevron.style.transform = 'rotate(180deg)';
             }
         }
-    </style>
-{% endblock %}
+
+        // Auto-hide messages after 5 seconds
+        setTimeout(() => {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(message => {
+                message.style.opacity = '0';
+                message.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    message.remove();
+                }, 300);
+            });
+        }, 5000);
+
+        // Add ripple effect to buttons
+        document.querySelectorAll('.upload-btn, .process-btn, .sample-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.3);
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

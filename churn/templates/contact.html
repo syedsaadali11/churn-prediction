@@ -1,173 +1,242 @@
-{% extends 'base.html' %}
-
-{% block title %}Contact Us{% endblock %}
-
-{% block content %}
-    <div class="contact-container">
-        <div class="contact-hero">
-            <h1 class="contact-heading" data-aos="fade-up">Get in Touch</h1>
-            <p class="contact-subtext" data-aos="fade-up" data-aos-delay="150">We're here to help and answer any questions you might have.</p>
-        </div>
-
-        <div class="contact-grid">
-            <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="card-content">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <h3>Live Chat</h3>
-                    <p>Instant support 24/7</p>
-                    <button class="card-cta">Start Chat</button>
-                </div>
-            </div>
-
-            <div class="contact-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="card-content">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3>Email Us</h3>
-                    <p>sparkifydirectors@predict.com</p>
-                    <a href="mailto:support@churnpredictor.com" class="card-cta">Send Email</a>
-                </div>
-            </div>
-
-            <div class="contact-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="card-content">
-                    <div class="card-icon-wrapper">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3>Visit Us</h3>
-                    <p>Mansehra City</p>
-                    <button class="card-cta">Get Directions</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="contact-form-section" data-aos="fade-up" data-aos-delay="200">
-            <div class="form-container">
-                <form class="contact-form">
-                    <div class="form-group">
-                        <input type="text" id="name" required>
-                        <label for="name">Name</label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="email" id="email" required>
-                        <label for="email">Email</label>
-                    </div>
-
-                    <div class="form-group">
-                        <textarea id="message" rows="4" required></textarea>
-                        <label for="message">Message</label>
-                    </div>
-
-                    <button type="submit" class="submit-btn">
-                        Send Message <i class="fas fa-arrow-right"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | RetentionAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <style>
-        .contact-container {
-            padding: 4rem 5%;
-            background: radial-gradient(circle at 10% 20%, rgba(16, 42, 87, 0.1) 0%, transparent 50%);
+        :root {
+            --primary-sea-green: #20b2aa;
+            --sea-green-light: #5fd3d0;
+            --sea-green-dark: #1a9b95;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #3b82f6;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
 
-        .contact-hero {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto 4rem;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .contact-heading {
-            font-size: 2.5rem;
-            background: linear-gradient(45deg, #fff, #a0d7ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-        }
-
-        .contact-subtext {
-            font-size: 1.1rem;
-            color: #94a3b8;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0fdfc 0%, #e6fffa 100%);
+            color: var(--gray-900);
+            min-height: 100vh;
             line-height: 1.6;
         }
 
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        /* Navigation */
+        .navbar {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-sea-green);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
             gap: 2rem;
-            margin: 3rem 0;
+            align-items: center;
         }
 
-        .contact-card {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 16px;
-            padding: 2rem;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .nav-link {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
             transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
         }
 
-        .contact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 32px rgba(0, 103, 255, 0.1);
+        .nav-link:hover {
+            color: var(--primary-sea-green);
         }
 
-        .card-icon-wrapper {
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 119, 255, 0.1);
-            border-radius: 12px;
+        .nav-link.active {
+            color: var(--primary-sea-green);
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-sea-green), var(--sea-green-light));
+            border-radius: 2px;
+        }
+
+        .back-btn {
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
+            gap: 0.5rem;
+            font-weight: 500;
         }
 
-        .card-icon-wrapper i {
-            color: #60a5fa;
-            font-size: 1.5rem;
+        .back-btn:hover {
+            background: var(--gray-50);
+            border-color: var(--primary-sea-green);
+            color: var(--primary-sea-green);
+            transform: translateX(-2px);
         }
 
-        .contact-card h3 {
-            color: #f8fafc;
-            margin-bottom: 0.5rem;
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 4rem 0;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
             font-size: 1.25rem;
+            color: var(--gray-600);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
         }
 
-        .contact-card p {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        .card-cta {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.5rem 1.5rem;
-            border-radius: 8px;
-            background: rgba(96, 165, 250, 0.1);
-            color: #60a5fa;
-            border: 1px solid rgba(96, 165, 250, 0.2);
+        .hero-stat {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
             transition: all 0.3s ease;
-            text-decoration: none;
-            font-size: 0.9rem;
         }
 
-        .card-cta:hover {
-            background: rgba(96, 165, 250, 0.2);
-            transform: translateY(-2px);
+        .hero-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-sea-green);
         }
 
-        .contact-form-section {
-            max-width: 600px;
-            margin: 4rem auto;
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-sea-green);
+        }
+
+        .stat-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+
+        .stat-desc {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Contact Form */
+        .contact-form-container {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .form-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+
+        .form-subtitle {
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.6;
         }
 
         .contact-form {
@@ -176,87 +245,1276 @@
             gap: 1.5rem;
         }
 
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
         .form-group {
             position: relative;
         }
 
-        .form-group input,
-        .form-group textarea {
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+
+        .form-input, .form-select, .form-textarea {
             width: 100%;
             padding: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: #fff;
+            background: var(--white);
+            border: 2px solid var(--gray-300);
+            border-radius: 12px;
+            color: var(--gray-900);
+            font-size: 1rem;
             transition: all 0.3s ease;
+            font-family: inherit;
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
             outline: none;
-            border-color: #60a5fa;
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+            border-color: var(--primary-sea-green);
+            box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.1);
         }
 
-        .form-group label {
-            position: absolute;
-            left: 1rem;
-            top: 1rem;
-            color: #94a3b8;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            background: rgba(15, 23, 42, 0.8);
-            padding: 0 0.5rem;
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: var(--gray-400);
         }
 
-        .form-group input:focus + label,
-        .form-group input:not(:placeholder-shown) + label,
-        .form-group textarea:focus + label,
-        .form-group textarea:not(:placeholder-shown) + label {
-            transform: translateY(-1.2rem);
-            font-size: 0.8rem;
-            color: #60a5fa;
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
         }
 
-        .submit-btn {
-            align-self: flex-start;
-            padding: 0.8rem 2rem;
-            border-radius: 8px;
-            background: linear-gradient(45deg, #3b82f6, #60a5fa);
-            color: white;
+        .form-select {
+            cursor: pointer;
+        }
+
+        .form-select option {
+            background: var(--white);
+            color: var(--gray-900);
+        }
+
+        .form-btn {
+            padding: 1.25rem 2rem;
+            background: linear-gradient(135deg, var(--primary-sea-green), var(--sea-green-light));
             border: none;
+            border-radius: 12px;
+            color: var(--white);
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .form-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+
+        .info-subtitle {
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-method {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .contact-method:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-sea-green);
+        }
+
+        .method-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .method-icon.email {
+            background: linear-gradient(135deg, var(--primary-sea-green), var(--sea-green-light));
+        }
+
+        .method-icon.phone {
+            background: linear-gradient(135deg, var(--info), #60a5fa);
+        }
+
+        .method-icon.chat {
+            background: linear-gradient(135deg, var(--success), #34d399);
+        }
+
+        .method-icon.office {
+            background: linear-gradient(135deg, var(--warning), #fbbf24);
+        }
+
+        .method-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+
+        .method-desc {
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .method-link {
+            color: var(--primary-sea-green);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .method-link:hover {
+            color: var(--sea-green-dark);
+            text-decoration: underline;
+        }
+
+        /* Office Hours */
+        .office-hours {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hours-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--gray-900);
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        .hours-title i {
+            color: var(--primary-sea-green);
         }
 
-        @media (max-width: 768px) {
-            .contact-container {
-                padding: 2rem 5%;
+        .hours-list {
+            list-style: none;
+        }
+
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-200);
+            color: var(--gray-700);
+        }
+
+        .hours-item:last-child {
+            border-bottom: none;
+        }
+
+        .hours-day {
+            font-weight: 500;
+        }
+
+        .hours-time {
+            color: var(--primary-sea-green);
+            font-weight: 600;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .faq-item:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-sea-green);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--gray-900);
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-sea-green);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+            color: var(--primary-sea-green);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Map Section */
+        .map-section {
+            margin-bottom: 4rem;
+        }
+
+        .map-container {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 350px;
+            background: var(--gray-50);
+            border: 2px dashed var(--gray-300);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary-sea-green);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .map-placeholder:hover {
+            border-color: var(--primary-sea-green);
+            background: rgba(32, 178, 170, 0.05);
+        }
+
+        .map-placeholder i {
+            margin-bottom: 1rem;
+        }
+
+        .map-placeholder-text {
+            font-size: 1rem;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .map-info {
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .map-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+
+        .map-address {
+            color: var(--gray-700);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .map-directions {
+            color: var(--primary-sea-green);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--primary-sea-green);
+            border-radius: 8px;
+        }
+
+        .map-directions:hover {
+            background: var(--primary-sea-green);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Messages */
+        .messages {
+            margin-bottom: 2rem;
+        }
+
+        .message {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+        }
+
+        .message.success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: var(--error);
+        }
+
+        /* Form Validation */
+        .form-input.error, .form-textarea.error, .form-select.error {
+            border-color: var(--error);
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .form-input.error + .error-message,
+        .form-textarea.error + .error-message,
+        .form-select.error + .error-message {
+            display: block;
+        }
+
+        /* Loading State */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(32, 178, 170, 0.2), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Enhanced Contact Methods */
+        .contact-methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Support Features */
+        .support-features {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .features-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            color: var(--primary-sea-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-text {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                gap: 1rem;
             }
             
-            .contact-heading {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
                 font-size: 2rem;
             }
             
-            .contact-grid {
+            .contact-section {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .nav-container {
+                padding: 0 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .contact-form-container,
+            .map-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-form-container,
+            .map-container {
+                padding: 1.5rem 1rem;
             }
         }
     </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="logo">RetentionAI</a>
+            
+            <ul class="nav-menu">
+                <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+                <li><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>
+                <li><a href="{% url 'services' %}" class="nav-link">Services</a></li>
+                <li><a href="{% url 'about' %}" class="nav-link">About</a></li>
+                <li><a href="{% url 'contact' %}" class="nav-link active">Contact</a></li>
+            </ul>
+            
+            <a href="{% url 'home' %}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Django Messages -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                <i class="fas fa-{% if message.tags == 'error' %}exclamation-triangle{% else %}check-circle{% endif %}"></i>
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">Get in Touch</h1>
+            <p class="hero-subtitle">
+                Have questions about RetentionAI? Need support? Want to schedule a demo? 
+                We're here to help you succeed with AI-powered customer retention solutions.
+            </p>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-title">24/7 Support</div>
+                    <div class="stat-desc">Round-the-clock assistance for all your needs</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-reply"></i>
+                    </div>
+                    <div class="stat-title">Quick Response</div>
+                    <div class="stat-desc">Average 2-hour reply time guaranteed</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-title">Expert Team</div>
+                    <div class="stat-desc">Dedicated AI and support specialists</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="stat-title">Global Reach</div>
+                    <div class="stat-desc">Supporting clients in 24+ countries</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <!-- Contact Form -->
+            <div class="contact-form-container">
+                <h2 class="form-title">Send us a Message</h2>
+                <p class="form-subtitle">
+                    Fill out the form below and we'll get back to you within 24 hours. 
+                    For urgent matters, please call us directly or use our live chat.
+                </p>
+                
+                <form method="post" class="contact-form" id="contactForm">
+                    {% csrf_token %}
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first_name" class="form-label">First Name *</label>
+                            <input 
+                                type="text" 
+                                id="first_name" 
+                                name="first_name" 
+                                class="form-input" 
+                                placeholder="Enter your first name"
+                                required
+                            >
+                            <div class="error-message">Please enter your first name</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name" class="form-label">Last Name *</label>
+                            <input 
+                                type="text" 
+                                id="last_name" 
+                                name="last_name" 
+                                class="form-input" 
+                                placeholder="Enter your last name"
+                                required
+                            >
+                            <div class="error-message">Please enter your last name</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-input" 
+                                placeholder="Enter your email address"
+                                required
+                            >
+                            <div class="error-message">Please enter a valid email address</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                name="phone" 
+                                class="form-input" 
+                                placeholder="+1 (555) 123-4567"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="company" class="form-label">Company</label>
+                            <input 
+                                type="text" 
+                                id="company" 
+                                name="company" 
+                                class="form-input" 
+                                placeholder="Your company name"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Subject *</label>
+                            <select id="subject" name="subject" class="form-select" required>
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="demo">Request Demo</option>
+                                <option value="support">Technical Support</option>
+                                <option value="billing">Billing Question</option>
+                                <option value="partnership">Partnership Opportunity</option>
+                                <option value="enterprise">Enterprise Solutions</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div class="error-message">Please select a subject</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message *</label>
+                        <textarea 
+                            id="message" 
+                            name="message" 
+                            class="form-textarea" 
+                            placeholder="Tell us how we can help you. Please include any specific requirements or questions..."
+                            required
+                        ></textarea>
+                        <div class="error-message">Please enter your message</div>
+                    </div>
+
+                    <button type="submit" class="form-btn" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        Send Message
+                    </button>
+                </form>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h2 class="info-title">Contact Information</h2>
+                <p class="info-subtitle">
+                    Choose the best way to reach us. We're here to help with any questions 
+                    about our AI-powered customer retention solutions and provide expert guidance.
+                </p>
+
+                <!-- Support Features -->
+                <div class="support-features">
+                    <h3 class="features-title">Why Choose Our Support?</h3>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <div class="feature-text">Award-Winning Support</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="feature-text">AI Expertise</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-check"></i>
+                            </div>
+                            <div class="feature-text">Secure & Reliable</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="feature-text">Fast Implementation</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="method-icon email">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3 class="method-title">Email Support</h3>
+                        <p class="method-desc">
+                            Get detailed help with your questions. Our expert team typically responds within 2 hours during business hours.
+                        </p>
+                        <a href="mailto:support@retentionai.com" class="method-link">
+                            support@retentionai.com
+                        </a>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="method-icon phone">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3 class="method-title">Phone Support</h3>
+                        <p class="method-desc">
+                            Speak directly with our support specialists for immediate assistance and personalized guidance.
+                        </p>
+                        <a href="tel:+1-555-123-4567" class="method-link">
+                            +1 (555) 123-4567
+                        </a>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="method-icon chat">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3 class="method-title">Live Chat</h3>
+                        <p class="method-desc">
+                            Chat with our team in real-time for quick questions, technical support, and instant assistance.
+                        </p>
+                        <a href="#" class="method-link" onclick="openChat()">
+                            Start Live Chat
+                        </a>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="method-icon office">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3 class="method-title">Visit Our Office</h3>
+                        <p class="method-desc">
+                            Schedule a meeting at our headquarters in San Francisco for in-person consultations and demos.
+                        </p>
+                        <a href="#map" class="method-link">
+                            View Location & Schedule Visit
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Office Hours -->
+                <div class="office-hours">
+                    <h3 class="hours-title">
+                        <i class="fas fa-clock"></i>
+                        Office Hours & Availability
+                    </h3>
+                    <ul class="hours-list">
+                        <li class="hours-item">
+                            <span class="hours-day">Monday - Friday</span>
+                            <span class="hours-time">9:00 AM - 6:00 PM PST</span>
+                        </li>
+                        <li class="hours-item">
+                            <span class="hours-day">Saturday</span>
+                            <span class="hours-time">10:00 AM - 4:00 PM PST</span>
+                        </li>
+                        <li class="hours-item">
+                            <span class="hours-day">Sunday</span>
+                            <span class="hours-time">Closed</span>
+                        </li>
+                        <li class="hours-item">
+                            <span class="hours-day">Emergency Support</span>
+                            <span class="hours-time">24/7 Available</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">
+                Quick answers to common questions about contacting us and getting the support you need
+            </p>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How quickly do you respond to support requests?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We aim to respond to all support requests within 2 hours during business hours. For urgent issues, our 24/7 emergency support line is available for immediate assistance. Enterprise clients receive priority support with even faster response times.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What's the best way to get technical support?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            For technical issues, we recommend using our live chat or calling our support line directly. This allows our technical team to provide real-time assistance, screen sharing, and immediate troubleshooting for complex problems.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I schedule a product demo or consultation?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Select "Request Demo" in the contact form above, or call us directly to schedule a personalized demonstration of RetentionAI's capabilities tailored to your specific use case and industry requirements.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do you offer on-site consultations and training?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, we offer on-site consultations and training sessions for enterprise clients. Contact our sales team to discuss your requirements and schedule a visit from our AI experts and implementation specialists.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What information should I include in my support request?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Please include your account details, a detailed description of the issue, any error messages, steps to reproduce the problem, and your current subscription plan. Screenshots, screen recordings, or log files are also very helpful for faster resolution.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Is support available in multiple languages?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Currently, we provide support in English, Spanish, French, German, and Japanese. We're continuously expanding our multilingual support team to better serve our global customer base across different time zones.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="map-section" id="map">
+            <h2 class="section-title">Visit Our Office</h2>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <div class="map-placeholder-text">Interactive Map Coming Soon</div>
+                </div>
+                <div class="map-info">
+                    <h3 class="map-title">RetentionAI Headquarters</h3>
+                    <div class="map-address">
+                        123 Innovation Drive, Suite 400<br>
+                        San Francisco, CA 94105<br>
+                        United States<br><br>
+                        <strong>Parking:</strong> Validated parking available<br>
+                        <strong>Public Transit:</strong> 2 blocks from Montgomery Station
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="map-directions">
+                        <i class="fas fa-directions"></i>
+                        Get Directions
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <script>
-        AOS.init({
-            duration: 600,
-            once: true,
-            easing: 'ease-out-quad'
+        // FAQ Toggle functionality
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        // Form validation
+        function validateForm() {
+            const form = document.getElementById('contactForm');
+            const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                const value = input.value.trim();
+                
+                // Remove previous error state
+                input.classList.remove('error');
+                
+                // Check if field is empty
+                if (!value) {
+                    input.classList.add('error');
+                    isValid = false;
+                    return;
+                }
+                
+                // Email validation
+                if (input.type === 'email') {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(value)) {
+                        input.classList.add('error');
+                        isValid = false;
+                    }
+                }
+            });
+            
+            return isValid;
+        }
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                showMessage('Please fill in all required fields correctly.', 'error');
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+            
+            // Simulate form submission
+            setTimeout(() => {
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+                
+                // Show success message
+                showMessage('Thank you for your message! We\'ll get back to you within 24 hours.', 'success');
+                
+                // Reset form
+                this.reset();
+                
+                // Remove any error states
+                document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(input => {
+                    input.classList.remove('error');
+                });
+            }, 2000);
         });
+
+        // Real-time validation
+        document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(input => {
+            input.addEventListener('blur', function() {
+                const value = this.value.trim();
+                
+                // Remove error state
+                this.classList.remove('error');
+                
+                // Check if required field is empty
+                if (this.hasAttribute('required') && !value) {
+                    this.classList.add('error');
+                    return;
+                }
+                
+                // Email validation
+                if (this.type === 'email' && value) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(value)) {
+                        this.classList.add('error');
+                    }
+                }
+            });
+            
+            input.addEventListener('focus', function() {
+                this.classList.remove('error');
+            });
+        });
+
+        // Show message function
+        function showMessage(text, type) {
+            const messagesContainer = document.querySelector('.messages') || createMessagesContainer();
+            const message = document.createElement('div');
+            message.className = `message ${type}`;
+            message.innerHTML = `
+                <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : 'check-circle'}"></i>
+                ${text}
+            `;
+            messagesContainer.appendChild(message);
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                message.style.opacity = '0';
+                message.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    message.remove();
+                }, 300);
+            }, 5000);
+        }
+
+        function createMessagesContainer() {
+            const container = document.createElement('div');
+            container.className = 'messages';
+            document.querySelector('.main-content').insertBefore(container, document.querySelector('.hero-section'));
+            return container;
+        }
+
+        // Live chat function
+        function openChat() {
+            // Simulate opening live chat
+            showMessage('Live chat is opening... Please wait a moment.', 'success');
+            
+            // In a real implementation, this would open your chat widget
+            setTimeout(() => {
+                alert('Live chat would open here. This is a demo implementation.');
+            }, 1000);
+        }
+
+        // Contact method hover effects
+        document.querySelectorAll('.contact-method').forEach(method => {
+            method.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.method-icon');
+                icon.style.transform = 'scale(1.1) rotate(5deg)';
+            });
+            
+            method.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.method-icon');
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            });
+        });
+
+        // Hero stats animation
+        document.querySelectorAll('.hero-stat').forEach(stat => {
+            stat.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.stat-icon');
+                icon.style.transform = 'scale(1.2)';
+            });
+            
+            stat.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.stat-icon');
+                icon.style.transform = 'scale(1)';
+            });
+        });
+
+        // Phone number formatting
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 6) {
+                value = value.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+            } else if (value.length >= 3) {
+                value = value.replace(/(\d{3})(\d{3})/, '($1) $2');
+            }
+            e.target.value = value;
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Auto-hide existing messages after 5 seconds
+        setTimeout(() => {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(message => {
+                message.style.opacity = '0';
+                message.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    message.remove();
+                }, 300);
+            });
+        }, 5000);
+
+        // Form analytics tracking
+        document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                console.log(`Form field focused: ${this.name || this.id}`);
+                // Here you could send analytics data
+            });
+        });
+
+        // Contact method click tracking
+        document.querySelectorAll('.method-link').forEach(link => {
+            link.addEventListener('click', function() {
+                const methodType = this.closest('.contact-method').querySelector('.method-title').textContent;
+                console.log(`Contact method clicked: ${methodType}`);
+                // Here you could send analytics data
+            });
+        });
+
+        // Add ripple effect to buttons
+        document.querySelectorAll('.form-btn, .method-link, .map-directions').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.3);
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
-{% endblock %}
+</body>
+</html>

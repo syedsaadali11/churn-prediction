@@ -1,121 +1,1314 @@
-{% extends 'base.html' %}
-
-{% block title %}FAQ{% endblock %}
-
-{% block content %}
-    <div class="faq-container">
-        <h1 class="faq-heading">Frequently Asked Questions</h1>
-        <p class="faq-subtext">Find answers to common questions about churn prediction.</p>
-
-        <div class="faq-section">
-            <div class="faq-box">
-                <h2 class="faq-title">What is churn prediction? <i class="fas fa-chevron-down"></i></h2>
-                <div class="faq-content">
-                    <p>Churn prediction is the process of using AI and data analytics to identify customers who are likely to stop using a service.</p>
-                </div>
-            </div>
-
-            <div class="faq-box">
-                <h2 class="faq-title">How accurate is the churn prediction model? <i class="fas fa-chevron-down"></i></h2>
-                <div class="faq-content">
-                    <p>Our model is trained on historical data and can achieve high accuracy depending on the quality of input data.</p>
-                </div>
-            </div>
-
-            <div class="faq-box">
-                <h2 class="faq-title">Can I upload my own data for churn prediction? <i class="fas fa-chevron-down"></i></h2>
-                <div class="faq-content">
-                    <p>Yes! You can upload a CSV file with customer data, and our AI model will generate churn predictions.</p>
-                </div>
-            </div>
-
-            <div class="faq-box">
-                <h2 class="faq-title">What actions can I take after getting churn predictions? <i class="fas fa-chevron-down"></i></h2>
-                <div class="faq-content">
-                    <p>Businesses can use churn insights to improve customer engagement, offer discounts, and enhance customer support.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | RetentionAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <style>
-        .faq-container {
-            text-align: center;
-            padding: 60px 10%;
+        :root {
+            --primary-sea-green: #20b2aa;
+            --primary-sea-green-light: #48d1cc;
+            --primary-sea-green-dark: #008b8b;
+            --accent-sea-green: #40e0d0;
+            --white: #ffffff;
+            --light-gray: #f8fafc;
+            --medium-gray: #e2e8f0;
+            --dark-gray: #64748b;
+            --text-dark: #1e293b;
+            --text-medium: #475569;
+            --text-light: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
 
-        .faq-heading {
-            font-size: 3rem;
-            background: linear-gradient(45deg, #00f7ff, #0066ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .faq-subtext {
-            font-size: 1.2rem;
-            color: #ccc;
-            max-width: 700px;
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 50%, #f0fdfa 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--medium-gray);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
             margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        .faq-section {
-            max-width: 800px;
-            margin: 40px auto;
-            text-align: left;
-        }
-
-        .faq-box {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .faq-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
-        }
-
-        .faq-title {
-            font-size: 1.5rem;
-            color: #00f7ff;
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary-sea-green);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--primary-sea-green-dark);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-sea-green);
+        }
+
+        .nav-link.active {
+            color: var(--primary-sea-green);
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-sea-green);
+            border-radius: 1px;
+        }
+
+        .back-btn {
+            background: var(--white);
+            border: 2px solid var(--primary-sea-green);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: var(--primary-sea-green);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-sea-green);
+            color: var(--white);
+            transform: translateX(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 4rem 0;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-medium);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 4rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .search-section:hover {
+            border-color: var(--primary-sea-green);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.25rem 1.5rem 1.25rem 4rem;
+            background: var(--light-gray);
+            border: 2px solid var(--medium-gray);
+            border-radius: 16px;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-sea-green);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-light);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .search-results {
+            margin-top: 1rem;
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: 12px;
+            color: var(--text-medium);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .faq-content {
-            display: none;
-            padding-top: 10px;
-            color: #cccccc;
+        .category-btn:hover {
+            background: var(--light-gray);
+            color: var(--primary-sea-green);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
-        .faq-box.active .faq-content {
-            display: block;
+        .category-btn.active {
+            background: var(--primary-sea-green);
+            color: var(--white);
+            border-color: var(--primary-sea-green);
+            box-shadow: var(--shadow-lg);
         }
 
-        @media (max-width: 900px) {
-            .faq-section {
-                max-width: 100%;
+        /* FAQ Sections */
+        .faq-sections {
+            display: grid;
+            gap: 3rem;
+        }
+
+        .faq-category {
+            background: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faq-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-sea-green), var(--accent-sea-green));
+        }
+
+        .faq-category:hover {
+            border-color: var(--primary-sea-green);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+            background: var(--primary-sea-green);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .category-icon:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .category-icon.general { 
+            background: linear-gradient(135deg, var(--primary-sea-green), var(--primary-sea-green-light)); 
+        }
+        .category-icon.technical { 
+            background: linear-gradient(135deg, var(--primary-sea-green-dark), var(--primary-sea-green)); 
+        }
+        .category-icon.billing { 
+            background: linear-gradient(135deg, var(--accent-sea-green), var(--primary-sea-green-light)); 
+        }
+        .category-icon.integration { 
+            background: linear-gradient(135deg, var(--success), var(--primary-sea-green)); 
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .category-desc {
+            color: var(--text-medium);
+            margin-top: 0.5rem;
+        }
+
+        /* FAQ Items */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq-item {
+            background: var(--light-gray);
+            border: 2px solid var(--medium-gray);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary-sea-green);
+            background: var(--white);
+            box-shadow: var(--shadow-md);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-sea-green);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+            color: var(--text-light);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+            color: var(--primary-sea-green);
+        }
+
+        .faq-item.active {
+            border-color: var(--primary-sea-green);
+            background: var(--white);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        .faq-answer-content p {
+            margin-bottom: 1rem;
+        }
+
+        .faq-answer-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-answer-content a {
+            color: var(--primary-sea-green);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .faq-answer-content a:hover {
+            color: var(--primary-sea-green-dark);
+            text-decoration: underline;
+        }
+
+        .faq-answer-content ul, .faq-answer-content ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .faq-answer-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-answer-content strong {
+            color: var(--text-dark);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--white);
+            border: 2px solid var(--primary-sea-green);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 4rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .contact-subtitle {
+            color: var(--text-medium);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid transparent;
+        }
+
+        .contact-btn.primary {
+            background: var(--primary-sea-green);
+            color: var(--white);
+            border-color: var(--primary-sea-green);
+        }
+
+        .contact-btn.primary:hover {
+            background: var(--primary-sea-green-dark);
+            border-color: var(--primary-sea-green-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-btn.secondary {
+            background: var(--white);
+            border-color: var(--primary-sea-green);
+            color: var(--primary-sea-green);
+        }
+
+        .contact-btn.secondary:hover {
+            background: var(--primary-sea-green);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Messages */
+        .messages {
+            margin-bottom: 2rem;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid;
+        }
+
+        .message.success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-medium);
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .no-results-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .no-results-text {
+            margin-bottom: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                gap: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .nav-container {
+                padding: 0 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .category-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .faq-category {
+                padding: 2rem 1.5rem;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .search-input {
+                padding: 1rem 1rem 1rem 3rem;
+                font-size: 1rem;
+            }
+            
+            .search-icon {
+                left: 1rem;
+            }
+            
+            .faq-category {
+                padding: 1.5rem 1rem;
+            }
+            
+            .category-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .contact-section {
+                padding: 2rem 1rem;
             }
         }
     </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="logo">RetentionAI</a>
+            
+            <ul class="nav-menu">
+                <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
+                <li><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>
+                <li><a href="{% url 'services' %}" class="nav-link">Services</a></li>
+                <li><a href="{% url 'about' %}" class="nav-link">About</a></li>
+                <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+                <li><a href="{% url 'faq' %}" class="nav-link active">FAQ</a></li>
+            </ul>
+            
+            <a href="{% url 'home' %}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Django Messages -->
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                <i class="fas fa-check-circle"></i>
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">Frequently Asked Questions</h1>
+            <p class="hero-subtitle">
+                Find answers to common questions about RetentionAI's customer churn prediction platform. 
+                Can't find what you're looking for? Contact our support team.
+            </p>
+        </section>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    placeholder="Search for answers..."
+                    id="faqSearch"
+                >
+                <div class="search-results" id="searchResults"></div>
+            </div>
+        </section>
+
+        <!-- Category Filters -->
+        <div class="category-filters">
+            <button class="category-btn active" data-category="all">
+                <i class="fas fa-th-large"></i>
+                All Categories
+            </button>
+            <button class="category-btn" data-category="general">
+                <i class="fas fa-info-circle"></i>
+                General
+            </button>
+            <button class="category-btn" data-category="technical">
+                <i class="fas fa-cogs"></i>
+                Technical
+            </button>
+            <button class="category-btn" data-category="billing">
+                <i class="fas fa-credit-card"></i>
+                Billing
+            </button>
+            <button class="category-btn" data-category="integration">
+                <i class="fas fa-plug"></i>
+                Integration
+            </button>
+        </div>
+
+        <!-- FAQ Sections -->
+        <div class="faq-sections" id="faqSections">
+            <!-- General Questions -->
+            <div class="faq-category" data-category="general">
+                <div class="category-header">
+                    <div class="category-icon general">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div>
+                        <h2 class="category-title">General Questions</h2>
+                        <p class="category-desc">Basic information about RetentionAI and our services</p>
+                    </div>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What is RetentionAI and how does it work?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>RetentionAI is an AI-powered customer churn prediction platform that helps businesses identify customers who are likely to cancel their subscriptions or stop purchasing.</p>
+                                <p>Our platform uses advanced machine learning algorithms to analyze customer behavior patterns, transaction history, engagement metrics, and other relevant data points to predict churn probability with 95%+ accuracy.</p>
+                                <p>The system provides actionable insights and recommendations to help you retain at-risk customers before they churn.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What types of businesses can benefit from RetentionAI?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>RetentionAI is designed for businesses with recurring revenue models, including:</p>
+                                <ul>
+                                    <li>SaaS companies and subscription services</li>
+                                    <li>E-commerce platforms with repeat customers</li>
+                                    <li>Telecommunications and utility companies</li>
+                                    <li>Financial services and fintech companies</li>
+                                    <li>Streaming and media services</li>
+                                    <li>Membership-based organizations</li>
+                                </ul>
+                                <p>Any business that wants to reduce customer churn and increase retention can benefit from our platform.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>How accurate are RetentionAI's predictions?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Our AI models achieve 95%+ accuracy in predicting customer churn, with some industry-specific models reaching up to 98% accuracy.</p>
+                                <p>The accuracy depends on several factors:</p>
+                                <ul>
+                                    <li>Quality and completeness of your data</li>
+                                    <li>Industry and business model</li>
+                                    <li>Historical data availability</li>
+                                    <li>Model training period</li>
+                                </ul>
+                                <p>We continuously improve our models with new data and feedback to maintain high accuracy rates.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>How long does it take to see results?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>You can start seeing initial predictions within 24-48 hours of data integration. However, the timeline varies based on your setup:</p>
+                                <ul>
+                                    <li><strong>Immediate:</strong> Basic dashboard and data visualization</li>
+                                    <li><strong>24-48 hours:</strong> Initial churn predictions using pre-trained models</li>
+                                    <li><strong>1-2 weeks:</strong> Custom model training with your specific data</li>
+                                    <li><strong>1 month:</strong> Optimized predictions with improved accuracy</li>
+                                </ul>
+                                <p>Most customers see actionable insights and start implementing retention strategies within the first week.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Questions -->
+            <div class="faq-category" data-category="technical">
+                <div class="category-header">
+                    <div class="category-icon technical">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div>
+                        <h2 class="category-title">Technical Questions</h2>
+                        <p class="category-desc">Implementation, integration, and technical specifications</p>
+                    </div>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What data do I need to provide for churn prediction?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>RetentionAI works with various types of customer data. The minimum required data includes:</p>
+                                <ul>
+                                    <li><strong>Customer Information:</strong> Unique ID, signup date, subscription status</li>
+                                    <li><strong>Transaction Data:</strong> Purchase history, payment amounts, billing cycles</li>
+                                    <li><strong>Usage Data:</strong> Login frequency, feature usage, session duration</li>
+                                    <li><strong>Support Data:</strong> Ticket history, complaint records, satisfaction scores</li>
+                                </ul>
+                                <p>Additional data like demographics, marketing interactions, and product usage can improve prediction accuracy.</p>
+                                <p>We support CSV uploads, API integrations, and direct database connections.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>How do I integrate RetentionAI with my existing systems?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>We offer multiple integration options to fit your technical setup:</p>
+                                <ul>
+                                    <li><strong>REST API:</strong> Real-time predictions and data sync</li>
+                                    <li><strong>Webhooks:</strong> Automated notifications for high-risk customers</li>
+                                    <li><strong>Database Connectors:</strong> Direct connections to MySQL, PostgreSQL, MongoDB</li>
+                                    <li><strong>Cloud Integrations:</strong> AWS, Google Cloud, Azure data pipelines</li>
+                                    <li><strong>Pre-built Connectors:</strong> Salesforce, HubSpot, Stripe, and 50+ platforms</li>
+                                </ul>
+                                <p>Our technical team provides integration support and can help with custom implementations.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Is my data secure with RetentionAI?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Yes, we take data security very seriously and implement enterprise-grade security measures:</p>
+                                <ul>
+                                    <li><strong>Encryption:</strong> AES-256 encryption for data at rest and in transit</li>
+                                    <li><strong>Access Control:</strong> Role-based permissions and multi-factor authentication</li>
+                                    <li><strong>Compliance:</strong> SOC 2 Type II, GDPR, CCPA, and HIPAA compliant</li>
+                                    <li><strong>Infrastructure:</strong> Hosted on secure AWS infrastructure with 99.9% uptime</li>
+                                    <li><strong>Monitoring:</strong> 24/7 security monitoring and threat detection</li>
+                                </ul>
+                                <p>We never share your data with third parties and you maintain full ownership of your data.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Can I customize the AI models for my specific business?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>We offer several levels of customization:</p>
+                                <ul>
+                                    <li><strong>Industry Models:</strong> Pre-trained models optimized for your industry</li>
+                                    <li><strong>Custom Training:</strong> Models trained specifically on your historical data</li>
+                                    <li><strong>Feature Engineering:</strong> Custom data features and business logic</li>
+                                    <li><strong>Threshold Tuning:</strong> Adjust sensitivity based on your business needs</li>
+                                    <li><strong>Ensemble Models:</strong> Combine multiple algorithms for better accuracy</li>
+                                </ul>
+                                <p>Enterprise customers can work with our data science team to develop fully custom models.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Billing Questions -->
+            <div class="faq-category" data-category="billing">
+                <div class="category-header">
+                    <div class="category-icon billing">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div>
+                        <h2 class="category-title">Billing & Pricing</h2>
+                        <p class="category-desc">Subscription plans, pricing, and payment information</p>
+                    </div>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What pricing plans do you offer?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>We offer flexible pricing plans to suit businesses of all sizes:</p>
+                                <ul>
+                                    <li><strong>Starter:</strong> $99/month - Up to 1,000 customers, basic predictions</li>
+                                    <li><strong>Professional:</strong> $299/month - Up to 10,000 customers, advanced analytics</li>
+                                    <li><strong>Enterprise:</strong> Custom pricing - Unlimited customers, custom models</li>
+                                </ul>
+                                <p>All plans include:</p>
+                                <ul>
+                                    <li>Real-time churn predictions</li>
+                                    <li>Dashboard and reporting</li>
+                                    <li>API access</li>
+                                    <li>Email support</li>
+                                </ul>
+                                <p>Enterprise plans include dedicated support, custom integrations, and SLA guarantees.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Do you offer a free trial?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Yes! We offer a 14-day free trial with full access to our platform features:</p>
+                                <ul>
+                                    <li>Upload up to 1,000 customer records</li>
+                                    <li>Generate churn predictions</li>
+                                    <li>Access to dashboard and analytics</li>
+                                    <li>API testing capabilities</li>
+                                    <li>Email support</li>
+                                </ul>
+                                <p>No credit card required to start your trial. You can upgrade to a paid plan anytime during or after the trial period.</p>
+                                <p><a href="{% url 'signup' %}">Start your free trial today</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Can I change or cancel my subscription?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Yes, you have full control over your subscription:</p>
+                                <ul>
+                                    <li><strong>Upgrade:</strong> Upgrade your plan anytime with immediate access to new features</li>
+                                    <li><strong>Downgrade:</strong> Downgrade at the end of your current billing cycle</li>
+                                    <li><strong>Cancel:</strong> Cancel anytime with no cancellation fees</li>
+                                    <li><strong>Pause:</strong> Temporarily pause your subscription for up to 3 months</li>
+                                </ul>
+                                <p>When you cancel, you'll retain access to your account until the end of your current billing period. Your data will be available for download for 30 days after cancellation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>What payment methods do you accept?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>We accept multiple payment methods for your convenience:</p>
+                                <ul>
+                                    <li><strong>Credit Cards:</strong> Visa, MasterCard, American Express, Discover</li>
+                                    <li><strong>Bank Transfer:</strong> ACH transfers for US customers</li>
+                                    <li><strong>Wire Transfer:</strong> Available for enterprise customers</li>
+                                    <li><strong>Invoice Billing:</strong> Net 30 terms for qualified enterprise accounts</li>
+                                </ul>
+                                <p>All payments are processed securely through Stripe with PCI DSS compliance. We also support multiple currencies including USD, EUR, GBP, and CAD.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integration Questions -->
+            <div class="faq-category" data-category="integration">
+                <div class="category-header">
+                    <div class="category-icon integration">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <div>
+                        <h2 class="category-title">Integration & Setup</h2>
+                        <p class="category-desc">Getting started, integrations, and implementation support</p>
+                    </div>
+                </div>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>How do I get started with RetentionAI?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Getting started is simple and takes just a few steps:</p>
+                                <ol>
+                                    <li><strong>Sign up:</strong> Create your free account and start your 14-day trial</li>
+                                    <li><strong>Connect Data:</strong> Upload a CSV file or connect your existing systems</li>
+                                    <li><strong>Configure:</strong> Set up your customer segments and business rules</li>
+                                    <li><strong>Train Models:</strong> Our AI analyzes your data and trains custom models</li>
+                                    <li><strong>Get Predictions:</strong> Start receiving churn predictions and insights</li>
+                                </ol>
+                                <p>Our onboarding team will guide you through each step and ensure you're getting maximum value from the platform.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Do you provide implementation support?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Yes! We provide comprehensive implementation support:</p>
+                                <ul>
+                                    <li><strong>Onboarding Call:</strong> 1-hour session to understand your needs and setup</li>
+                                    <li><strong>Technical Integration:</strong> Help with API setup and data connections</li>
+                                    <li><strong>Data Mapping:</strong> Assistance with data formatting and field mapping</li>
+                                    <li><strong>Model Configuration:</strong> Custom model setup and threshold tuning</li>
+                                    <li><strong>Training Sessions:</strong> Team training on platform features and best practices</li>
+                                </ul>
+                                <p>Enterprise customers receive dedicated customer success managers and priority support.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>Which platforms and tools do you integrate with?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>We integrate with 50+ popular business platforms:</p>
+                                <ul>
+                                    <li><strong>CRM Systems:</strong> Salesforce, HubSpot, Pipedrive, Zoho</li>
+                                    <li><strong>Payment Processors:</strong> Stripe, PayPal, Square, Braintree</li>
+                                    <li><strong>Analytics:</strong> Google Analytics, Mixpanel, Amplitude, Segment</li>
+                                    <li><strong>Support Tools:</strong> Zendesk, Intercom, Freshdesk, Help Scout</li>
+                                    <li><strong>Marketing:</strong> Mailchimp, Klaviyo, SendGrid, Marketo</li>
+                                    <li><strong>Databases:</strong> MySQL, PostgreSQL, MongoDB, Snowflake</li>
+                                </ul>
+                                <p>Don't see your platform? We can build custom integrations for enterprise customers.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <span>How often is the data updated and predictions refreshed?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>Data updates and prediction refresh rates depend on your plan and integration method:</p>
+                                <ul>
+                                    <li><strong>Real-time:</strong> API integrations provide instant updates</li>
+                                    <li><strong>Hourly:</strong> Automated data sync for connected platforms</li>
+                                    <li><strong>Daily:</strong> Batch processing for large datasets</li>
+                                    <li><strong>Weekly:</strong> Manual CSV uploads and model retraining</li>
+                                </ul>
+                                <p>Churn predictions are updated automatically when new data is received. You can also trigger manual updates anytime through the dashboard or API.</p>
+                                <p>Enterprise customers can configure custom update schedules based on their specific needs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults" style="display: none;">
+            <div class="no-results-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <h3 class="no-results-title">No results found</h3>
+            <p class="no-results-text">
+                We couldn't find any FAQs matching your search. Try different keywords or browse our categories.
+            </p>
+            <a href="{% url 'contact' %}" class="contact-btn primary">
+                <i class="fas fa-envelope"></i>
+                Contact Support
+            </a>
+        </div>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <h2 class="contact-title">Still Have Questions?</h2>
+            <p class="contact-subtitle">
+                Can't find the answer you're looking for? Our support team is here to help you get the most out of RetentionAI.
+            </p>
+            <div class="contact-buttons">
+                <a href="{% url 'contact' %}" class="contact-btn primary">
+                    <i class="fas fa-envelope"></i>
+                    Contact Support
+                </a>
+                <a href="#" class="contact-btn secondary" onclick="openChat()">
+                    <i class="fas fa-comments"></i>
+                    Live Chat
+                </a>
+                <a href="tel:+1-555-123-4567" class="contact-btn secondary">
+                    <i class="fas fa-phone"></i>
+                    Call Us
+                </a>
+            </div>
+        </section>
+    </main>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let faqBoxes = document.querySelectorAll(".faq-box");
+        // FAQ Toggle functionality
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all FAQ items in the same category
+            const category = faqItem.closest('.faq-category');
+            category.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
 
-            faqBoxes.forEach(box => {
-                box.addEventListener("click", function() {
-                    this.classList.toggle("active");
-                });
+        // Search functionality
+        const searchInput = document.getElementById('faqSearch');
+        const searchResults = document.getElementById('searchResults');
+        const faqSections = document.getElementById('faqSections');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            
+            if (query === '') {
+                // Show all sections
+                showAllSections();
+                searchResults.textContent = '';
+                return;
+            }
+
+            // Search through FAQ items
+            const allFAQItems = document.querySelectorAll('.faq-item');
+            let matchCount = 0;
+            let visibleCategories = new Set();
+
+            allFAQItems.forEach(item => {
+                const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+                
+                if (question.includes(query) || answer.includes(query)) {
+                    item.style.display = 'block';
+                    visibleCategories.add(item.closest('.faq-category'));
+                    matchCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Show/hide categories based on matches
+            document.querySelectorAll('.faq-category').forEach(category => {
+                if (visibleCategories.has(category)) {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = 'none';
+                }
+            });
+
+            // Update search results
+            if (matchCount > 0) {
+                searchResults.textContent = `Found ${matchCount} result${matchCount !== 1 ? 's' : ''} for "${query}"`;
+                faqSections.style.display = 'grid';
+                noResults.style.display = 'none';
+            } else {
+                searchResults.textContent = `No results found for "${query}"`;
+                faqSections.style.display = 'none';
+                noResults.style.display = 'block';
+            }
+        });
+
+        function showAllSections() {
+            document.querySelectorAll('.faq-category').forEach(category => {
+                category.style.display = 'block';
+            });
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.style.display = 'block';
+            });
+            faqSections.style.display = 'grid';
+            noResults.style.display = 'none';
+        }
+
+        // Category filtering
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.dataset.category;
+                
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Clear search
+                searchInput.value = '';
+                searchResults.textContent = '';
+                
+                // Filter categories
+                if (category === 'all') {
+                    showAllSections();
+                } else {
+                    document.querySelectorAll('.faq-category').forEach(cat => {
+                        if (cat.dataset.category === category) {
+                            cat.style.display = 'block';
+                        } else {
+                            cat.style.display = 'none';
+                        }
+                    });
+                    faqSections.style.display = 'grid';
+                    noResults.style.display = 'none';
+                }
             });
         });
+
+        // Live chat function
+        function openChat() {
+            // Simulate opening live chat
+            alert('Live chat would open here. This is a demo implementation.');
+        }
+
+        // FAQ item hover effects
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = 'translateX(5px)';
+                }
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Auto-hide messages after 5 seconds
+        setTimeout(() => {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(message => {
+                message.style.opacity = '0';
+                message.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    message.remove();
+                }, 300);
+            });
+        }, 5000);
+
+        // Keyboard navigation for FAQ items
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const focusedElement = document.activeElement;
+                if (focusedElement.classList.contains('faq-question')) {
+                    e.preventDefault();
+                    toggleFAQ(focusedElement);
+                }
+            }
+        });
+
+        // Make FAQ questions focusable
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.setAttribute('tabindex', '0');
+        });
+
+        // Analytics tracking
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const questionText = this.querySelector('span').textContent;
+                console.log(`FAQ opened: ${questionText}`);
+                // Here you could send analytics data
+            });
+        });
+
+        // Search analytics
+        let searchTimeout;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                if (this.value.trim()) {
+                    console.log(`FAQ search: ${this.value}`);
+                    // Here you could send analytics data
+                }
+            }, 1000);
+        });
     </script>
-{% endblock %}
+</body>
+</html>
