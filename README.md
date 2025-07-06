@@ -115,9 +115,9 @@ tenure,MonthlyCharges,TotalCharges,gender,SeniorCitizen,Partner,Dependents,Phone
 
 | Home Page | Actions | Landing |
 |----------|---------|---------|
-| ![home](assets/images/home.png) | ![homeactions](assets/images/homeactions.png) | ![landing](assets/images/landing.png) |
-|  |  | ![landing1](assets/images/landing1.png) |
-|  |  | ![landing3](assets/images/landing3.png) |
+| ![home](assets/home.png) | ![homeactions](assets/homeactions.png) | ![landing](assets/landing.png) |
+|  |  | ![landing1](assets/landing1.png) |
+|  |  | ![landing3](assets/landing3.png) |
 
 ---
 
@@ -125,7 +125,7 @@ tenure,MonthlyCharges,TotalCharges,gender,SeniorCitizen,Partner,Dependents,Phone
 
 | Sign In | Sign Up |
 |--------|---------|
-| ![flipsigninpage](assets/images/flipsigninpage.png) | ![flipsingup](assets/images/flipsingup.png) |
+| ![flipsigninpage](assets/flipsigninpage.png) | ![flipsingup](assets/flipsingup.png) |
 
 ---
 
@@ -133,9 +133,9 @@ tenure,MonthlyCharges,TotalCharges,gender,SeniorCitizen,Partner,Dependents,Phone
 
 | Question Sample 1 | Question Sample 2 | Result |
 |------------------|------------------|--------|
-| ![questionsample](assets/images/questionsample.png) | ![questionsample1](assets/images/questionsample1.png) | ![result1](assets/images/result1.png) |
-| ![questionsample2](assets/images/questionsample2.png) | ![questionsample3](assets/images/questionsample3.png) | ![result1_recommendations](assets/images/result1_recommendations.png) |
-| ![questionsample4](assets/images/questionsample4.png) |  | ![result2](assets/images/result2.png) |
+| ![questionsample](assets/questionsample.png) | ![questionsample1](assets/questionsample1.png) | ![result1](assets/result1.png) |
+| ![questionsample2](assets/questionsample2.png) | ![questionsample3](assets/questionsample3.png) | ![result1_recommendations](assets/result1_recommendations.png) |
+| ![questionsample4](assets/questionsample4.png) |  | ![result2](assets/result2.png) |
 
 ---
 
@@ -143,7 +143,7 @@ tenure,MonthlyCharges,TotalCharges,gender,SeniorCitizen,Partner,Dependents,Phone
 
 | Upload CSV | CSV Uploaded | Batch Result |
 |------------|--------------|--------------|
-| ![batchpredict](assets/images/batchpredict.png) | ![batchpredictcsvuploaded](assets/images/batchpredictcsvuploaded.png) | ![batchpredictresult](assets/images/batchpredictresult.png) |
+| ![batchpredict](assets/batchpredict.png) | ![batchpredictcsvuploaded](assets/batchpredictcsvuploaded.png) | ![batchpredictresult](assets/batchpredictresult.png) |
 
 ---
 
@@ -151,7 +151,7 @@ tenure,MonthlyCharges,TotalCharges,gender,SeniorCitizen,Partner,Dependents,Phone
 
 | Dashboard View 1 | Dashboard View 2 | Dashboard View 3 |
 |------------------|------------------|------------------|
-| ![admindashboard](assets/images/admindashboard.png) | ![admindashboard1](assets/images/admindashboard1.png) | ![admindashboard2](assets/images/admindashboard2.png) |
+| ![admindashboard](assets/admindashboard.png) | ![admindashboard1](assets/admindashboard1.png) | ![admindashboard2](assets/admindashboard2.png) |
 
 ---
 
@@ -159,7 +159,7 @@ tenure,MonthlyCharges,TotalCharges,gender,SeniorCitizen,Partner,Dependents,Phone
 
 | Services | Services (Alt) |
 |----------|----------------|
-| ![services](assets/images/services.png) | ![services1](assets/images/services1.png) |
+| ![services](assets/services.png) | ![services1](assets/services1.png) |
 
 ---
 
