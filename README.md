@@ -1,6 +1,6 @@
-# RetentionAI - Customer Churn Prediction System (Django + Ensemble AI)
+# ChurnGuard-AI - Customer Churn Prediction System (Django + Ensemble AI)
 
-**RetentionAI** is an AI-powered web platform that helps businesses predict customer churn with high accuracy. Using an ensemble of advanced machine learning models — **CatBoost**, **LightGBM**, and **XGBoost** — it identifies customers who are likely to leave and provides intelligent recommendations to retain them.
+**ChurnGuard-AI** is an AI-powered web platform that helps businesses predict customer churn with high accuracy. Using an ensemble of advanced machine learning models — **CatBoost**, **LightGBM**, and **XGBoost** — it identifies customers who are likely to leave and provides intelligent recommendations to retain them.
 
 🧠 Built with **Django**, RetentionAI allows:
 - 📋 Single customer predictions through a smart form.
